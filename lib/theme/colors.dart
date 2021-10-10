@@ -7,12 +7,13 @@ import 'app_theme.dart';
 class AppColors {
   AppColors._();
 
-  static const Color PRIMARY = Color(0xFFDB4F38);
-  static const Color PRIMARY_VARIANT = Color(0xFFDB3A1A);
-  static const Color PRIMARY_LIGHT = Color(0xFFFFA477);
-  static const Color SECONDARY = Color(0xff8CAB5A);
-  static const Color SECONDARY_VARIANT = Color(0xff73933E);
-  static const Color SECONDARY_LIGHT = Color(0xffB1D07A);
+  static const Color PRIMARY = Color(0xFF588BA5);
+  static const Color PRIMARY_VARIANT = Color(0xFF33515F);
+  static const Color PRIMARY_LIGHT = Color(0xFF588BA5);
+
+  static const Color SECONDARY = Color(0xFF588BA5);
+  static const Color SECONDARY_VARIANT = Color(0xFF33515F);
+  static const Color SECONDARY_LIGHT = Color(0xFF588BA5);
 
   static const TEXT_PRIMARY = Colors.black87;
   static const TEXT_SECONDARY = Colors.grey;

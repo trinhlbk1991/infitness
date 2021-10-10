@@ -1,7 +1,8 @@
 import 'package:flutter/cupertino.dart';
+import 'package:infitness/features/home/home_screen.dart';
 
 class HomeNavigator {
-  static const String HOME = 'home';
+  static const String HOME = '/';
 
   HomeNavigator._();
 
@@ -10,6 +11,6 @@ class HomeNavigator {
   }
 
   static homeScreen(BuildContext context, RouteSettings settings) {
-    return Container();
+    return HomeScreen();
   }
 }

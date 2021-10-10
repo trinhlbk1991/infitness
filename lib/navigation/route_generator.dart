@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:infitness/features/home/home_screen.dart';
 import 'package:infitness/navigation/home_navigator.dart';
 
 class RouteGenerator {
@@ -17,7 +18,7 @@ class RouteGenerator {
     switch (settings.name) {
       /* Home */
       case HomeNavigator.HOME:
-        screen = HomeNavigator.homeScreen(context, settings);
+        screen = HomeScreen();
         break;
       default:
         throw Exception('Unsupported route: ${settings.name}');
