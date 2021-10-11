@@ -33,10 +33,8 @@ class _WorkoutListScreenState extends BaseState<WorkoutListScreen> {
   @override
   Widget build(BuildContext context) {
     return BaseBlocListener<WorkoutListCubit, WorkoutListState>(
-      showLog: true,
       listener: _onStateChanged,
       child: BaseBlocBuilder<WorkoutListCubit, WorkoutListState>(
-        showLog: true,
         builder: (context, state) {
           return Container(
             child: Center(child: AppText('Workout List')),
