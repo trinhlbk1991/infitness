@@ -27,7 +27,7 @@ class TextSize {
 class AppRadius {
   AppRadius._();
 
-  static const CARD = 10.0;
+  static const CARD = 24.0;
   static const BOTTOM_SHEET = 24.0;
   static const DIALOG = 8.0;
   static const DEFAULT = 8.0;

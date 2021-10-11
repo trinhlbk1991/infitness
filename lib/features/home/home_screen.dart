@@ -1,5 +1,6 @@
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:infitness/base/base_state.dart';
 import 'package:infitness/features/workoutlist/workout_list_cubit.dart';
 import 'package:infitness/features/workoutlist/workout_list_screen.dart';
@@ -7,7 +8,6 @@ import 'package:infitness/theme/colors.dart';
 import 'package:infitness/theme/dimensions.dart';
 import 'package:infitness/widgets/animated_indexed_stack.dart';
 import 'package:infitness/widgets/app_text.dart';
-import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -33,8 +33,10 @@ class _HomeScreenState extends BaseState<HomeScreen> {
             child: AnimatedIndexedStack(
               index: _currentTab,
               children: [
-                Provider<WorkoutListCubit>(
-                  create: (context) => WorkoutListCubit(),
+                RepositoryProvider<WorkoutListCubit>(
+                  create: (context) => WorkoutListCubit(
+                    workoutHive: RepositoryProvider.of(context),
+                  ),
                   child: WorkoutListScreen(),
                 ),
                 Container(child: Center(child: AppText('Report'))),
@@ -62,7 +64,7 @@ class _HomeScreenState extends BaseState<HomeScreen> {
         notchSmoothness: NotchSmoothness.softEdge,
         leftCornerRadius: AppRadius.BOTTOM_SHEET,
         rightCornerRadius: AppRadius.BOTTOM_SHEET,
-        activeColor: AppColors.PRIMARY,
+        activeColor: secondaryColor(context),
         backgroundColor: Theme.of(context).bottomAppBarColor,
         onTap: (index) => setState(() => _currentTab = index),
       );

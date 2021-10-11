@@ -1,12 +1,16 @@
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:infitness/database/settings_hive.dart';
-import 'package:provider/provider.dart';
+import 'package:infitness/database/workout_hive.dart';
 
 class HiveModule {
   HiveModule._();
 
   static final hives = [
-    Provider<SettingsHive>(
+    RepositoryProvider<SettingsHive>(
       create: (context) => SettingsHive(),
+    ),
+    RepositoryProvider<WorkoutHive>(
+      create: (context) => WorkoutHive(),
     ),
   ];
 }

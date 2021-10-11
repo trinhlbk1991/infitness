@@ -19,8 +19,9 @@ dependencies:
   hive: ^2.0.4
   hive_flutter: ^1.1.0
 
-  animated_bottom_navigation_bar: ^0.3.2
   google_fonts: ^2.0.0
+  animated_bottom_navigation_bar: ^0.3.2
+  expandable: ^5.0.1
 
   equatable: ^2.0.3
   tuple: ^2.0.0
@@ -43,3 +44,5 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/
