@@ -5,12 +5,11 @@ class WorkoutListCubit extends Cubit<WorkoutListState> {
   WorkoutListCubit() : super(WorkoutListState(isLoading: false));
 
   loadWorkouts() async {
+    // This looks stupid but without the delay, this state won't be emitted
     Future.delayed(Duration(milliseconds: 1)).then((value) {
       emit(WorkoutListState(isLoading: true));
     });
 
-    Future.delayed(Duration(seconds: 2)).then((value) {
-      emit(WorkoutListState(isLoading: false));
-    });
+
   }
 }

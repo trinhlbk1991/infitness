@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
+import 'package:infitness/database/hive_utils.dart';
 
 class SettingsHive {
-  final _box = Hive.openBox('settings');
+  final _box = HiveUtils.boxSettings();
 
-  Future<ThemeMode> getThemeMode() async {
-    return await _box
-        .then((box) => box.get('theme-mode', defaultValue: ThemeMode.system));
+  ThemeMode getThemeMode() {
+    return _box.get('theme-mode', defaultValue: ThemeMode.system);
   }
 
-  setThemeMode(ThemeMode value) async {
-    await _box.then((box) => box.put('theme-mode', value));
+  setThemeMode(ThemeMode value) {
+    _box.put('theme-mode', value);
   }
 }
