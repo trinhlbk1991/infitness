@@ -8,8 +8,8 @@ class AppTheme {
         brightness: Brightness.dark,
         primarySwatch: Colors.grey,
         colorScheme: ColorScheme.dark(
-          primary: AppColors.PRIMARY,
-          primaryVariant: AppColors.PRIMARY_VARIANT,
+          primary: AppColors.DARK_PRIMARY,
+          primaryVariant: AppColors.DARK_PRIMARY_VARIANT,
           secondary: AppColors.SECONDARY,
           secondaryVariant: AppColors.SECONDARY_VARIANT,
           brightness: Brightness.dark,

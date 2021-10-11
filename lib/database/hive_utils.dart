@@ -1,5 +1,8 @@
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:infitness/model/exercise.dart';
+import 'package:infitness/model/set.dart';
+import 'package:infitness/model/workout.dart';
 
 class HiveUtils {
   HiveUtils._();
@@ -10,10 +13,14 @@ class HiveUtils {
   static init() async {
     await Hive.initFlutter();
     await Hive.openBox(BOX_SETTINGS);
-    await Hive.openBox(BOX_WORKOUT);
+    await Hive.openBox<Workout>(BOX_WORKOUT);
+
+    Hive.registerAdapter(ExerciseAdapter());
+    Hive.registerAdapter(SetAdapter());
+    Hive.registerAdapter(WorkoutAdapter());
   }
 
-  static boxSettings() => Hive.box(BOX_SETTINGS);
+  static Box boxSettings() => Hive.box(BOX_SETTINGS);
 
-  static boxWorkout() => Hive.box(BOX_WORKOUT);
+  static Box<Workout> boxWorkout() => Hive.box<Workout>(BOX_WORKOUT);
 }

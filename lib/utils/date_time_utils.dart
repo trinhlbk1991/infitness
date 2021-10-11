@@ -34,4 +34,10 @@ class DateTimeUtils {
     final formatter = DateFormat(format);
     return formatter.parseLoose(string);
   }
+
+  static String formatSeconds(int seconds) {
+    final minutes = seconds ~/ 60;
+    final secs = seconds % 60;
+    return "${minutes < 10 ? '0' + minutes.toString() : minutes.toString()}:${secs < 10 ? '0' + secs.toString() : secs.toString()}";
+  }
 }

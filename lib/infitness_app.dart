@@ -1,6 +1,7 @@
 import 'package:fimber_io/fimber_io.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:infitness/di/hive_module.dart';
 
 import 'navigation/home_navigator.dart';
 import 'navigation/route_generator.dart';
@@ -31,11 +32,14 @@ class InfitnessApp extends StatefulWidget {
 class _InfitnessAppState extends State<InfitnessApp> {
   @override
   Widget build(BuildContext context) {
-    return _pageContent(context);
+    return MultiRepositoryProvider(
+      providers: HiveModule.hives,
+      child: _pageContent(context),
+    );
   }
 
   Widget _pageContent(BuildContext context) {
-    final themeNotifier = Provider.of<ThemeNotifier>(context);
+    final themeNotifier = RepositoryProvider.of<ThemeNotifier>(context);
 
     return MaterialApp(
       initialRoute: HomeNavigator.HOME,

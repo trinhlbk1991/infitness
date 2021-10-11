@@ -19,17 +19,29 @@ class WorkoutAdapter extends TypeAdapter<Workout> {
     return Workout(
       id: fields[0] as String,
       name: fields[1] as String,
+      sets: (fields[2] as List).cast<Set>(),
+      isDeleted: fields[3] as bool,
+      createdAt: fields[4] as int,
+      updatedAt: fields[5] as int,
     );
   }
 
   @override
   void write(BinaryWriter writer, Workout obj) {
     writer
-      ..writeByte(2)
+      ..writeByte(6)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
-      ..write(obj.name);
+      ..write(obj.name)
+      ..writeByte(2)
+      ..write(obj.sets)
+      ..writeByte(3)
+      ..write(obj.isDeleted)
+      ..writeByte(4)
+      ..write(obj.createdAt)
+      ..writeByte(5)
+      ..write(obj.updatedAt);
   }
 
   @override
