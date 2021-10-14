@@ -20,7 +20,7 @@ class ProgressDialog {
         child: StatefulBuilder(
           builder: (context, setState) => Dialog(
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(AppRadius.DIALOG),
+              borderRadius: BorderRadius.circular(AppRadius.DEFAULT),
             ),
             child: Padding(
               padding: EdgeInsets.all(Spacing.LARGE),

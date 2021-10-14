@@ -1,7 +1,4 @@
-import 'package:flutter/material.dart';
 import 'package:infitness/database/hive_utils.dart';
-import 'package:infitness/model/exercise.dart';
-import 'package:infitness/model/set.dart';
 import 'package:infitness/model/workout.dart';
 
 class WorkoutHive {

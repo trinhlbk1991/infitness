@@ -19,17 +19,20 @@ class SetAdapter extends TypeAdapter<Set> {
     return Set(
       exercises: (fields[0] as List).cast<Exercise>(),
       repeat: fields[1] as int,
+      index: fields[2] as int,
     );
   }
 
   @override
   void write(BinaryWriter writer, Set obj) {
     writer
-      ..writeByte(2)
+      ..writeByte(3)
       ..writeByte(0)
       ..write(obj.exercises)
       ..writeByte(1)
-      ..write(obj.repeat);
+      ..write(obj.repeat)
+      ..writeByte(2)
+      ..write(obj.index);
   }
 
   @override

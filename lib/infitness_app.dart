@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:infitness/di/hive_module.dart';
 
-import 'navigation/home_navigator.dart';
+import 'navigation/infitness_navigator.dart';
 import 'navigation/route_generator.dart';
 import 'theme/app_theme.dart';
 import 'theme/theme_notifier.dart';
@@ -42,7 +42,7 @@ class _InfitnessAppState extends State<InfitnessApp> {
     final themeNotifier = RepositoryProvider.of<ThemeNotifier>(context);
 
     return MaterialApp(
-      initialRoute: HomeNavigator.HOME,
+      initialRoute: InfitnessNavigator.HOME,
       onGenerateRoute: RouteGenerator.routeFactory(context),
       theme: AppTheme().lightTheme,
       darkTheme: AppTheme().darkTheme,

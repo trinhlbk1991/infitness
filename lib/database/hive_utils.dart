@@ -12,12 +12,13 @@ class HiveUtils {
 
   static init() async {
     await Hive.initFlutter();
+
+    Hive.registerAdapter<Exercise>(ExerciseAdapter());
+    Hive.registerAdapter<Set>(SetAdapter());
+    Hive.registerAdapter<Workout>(WorkoutAdapter());
+
     await Hive.openBox(BOX_SETTINGS);
     await Hive.openBox<Workout>(BOX_WORKOUT);
-
-    Hive.registerAdapter(ExerciseAdapter());
-    Hive.registerAdapter(SetAdapter());
-    Hive.registerAdapter(WorkoutAdapter());
   }
 
   static Box boxSettings() => Hive.box(BOX_SETTINGS);

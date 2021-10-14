@@ -51,6 +51,6 @@ class Workout {
 
   @override
   String toString() {
-    return 'Workout{id: $id, name: $name}';
+    return 'Workout{id: $id, name: $name, sets: $sets}';
   }
 }

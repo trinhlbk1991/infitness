@@ -19,6 +19,11 @@ class AppTheme {
         hintColor: AppColors.TEXT_SECONDARY_DARK,
         textTheme: _createTextTheme(AppColors.TEXT_PRIMARY_DARK),
         iconTheme: IconThemeData(color: AppColors.TEXT_PRIMARY_DARK),
+        textSelectionTheme: TextSelectionThemeData(
+          cursorColor: AppColors.SECONDARY,
+          selectionColor: AppColors.SECONDARY_LIGHT,
+          selectionHandleColor: AppColors.SECONDARY,
+        ),
       );
 
   get lightTheme => ThemeData(
@@ -36,6 +41,11 @@ class AppTheme {
         hintColor: AppColors.TEXT_SECONDARY,
         textTheme: _createTextTheme(AppColors.TEXT_PRIMARY),
         iconTheme: IconThemeData(color: AppColors.TEXT_PRIMARY),
+        textSelectionTheme: TextSelectionThemeData(
+          cursorColor: AppColors.SECONDARY,
+          selectionColor: AppColors.SECONDARY_LIGHT,
+          selectionHandleColor: AppColors.SECONDARY,
+        ),
       );
 
   TextTheme _createTextTheme(Color color) => TextTheme(
