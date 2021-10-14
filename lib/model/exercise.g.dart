@@ -20,7 +20,7 @@ class ExerciseAdapter extends TypeAdapter<Exercise> {
       name: fields[0] as String,
       time: fields[1] as int,
       rep: fields[2] as int,
-      repeat: fields[3] as int,
+      index: fields[3] as int,
     );
   }
 
@@ -35,7 +35,7 @@ class ExerciseAdapter extends TypeAdapter<Exercise> {
       ..writeByte(2)
       ..write(obj.rep)
       ..writeByte(3)
-      ..write(obj.repeat);
+      ..write(obj.index);
   }
 
   @override

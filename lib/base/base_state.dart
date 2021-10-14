@@ -49,6 +49,7 @@ abstract class BaseState<T extends StatefulWidget> extends State<T> {
         ),
         bottomNavigationBar: bottomNavigationBar,
         floatingActionButton: fab,
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       );
 
   Widget scaffoldSafe({

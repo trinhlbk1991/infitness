@@ -11,6 +11,7 @@ class BaseButton extends StatelessWidget {
   final Color? borderColor;
   final Color? textColor;
   final VoidCallback? onPressed;
+  final EdgeInsets? padding;
 
   BaseButton(
     this.text,
@@ -18,32 +19,32 @@ class BaseButton extends StatelessWidget {
     this.background,
     this.borderColor,
     this.textColor,
+    this.padding,
   );
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 48.0,
-      // ignore: deprecated_member_use
-      child: RaisedButton(
-        padding: EdgeInsets.only(
-          left: Spacing.NORMAL,
-          right: Spacing.NORMAL,
-          top: Spacing.NORMAL,
-          bottom: Spacing.NORMAL,
-        ),
-        color: background ?? Theme.of(context).canvasColor,
+    return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        primary: background ?? Theme.of(context).canvasColor,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(100.0),
+          borderRadius: BorderRadius.circular(AppRadius.DEFAULT),
           side: BorderSide(color: borderColor!),
         ),
-        onPressed: onPressed,
-        child: AppText(
-          text!.toUpperCase(),
-          fontSize: TextSize.BODY,
-          fontWeight: FontWeight.w500,
-          color: textColor ?? textColorPrimary(context),
-        ),
+        padding: padding ??
+            EdgeInsets.only(
+              left: Spacing.NORMAL,
+              right: Spacing.NORMAL,
+              top: Spacing.SMALL_2,
+              bottom: Spacing.SMALL_2,
+            ),
+      ),
+      onPressed: onPressed,
+      child: AppText(
+        text!.toUpperCase(),
+        fontSize: TextSize.BODY,
+        fontWeight: FontWeight.w500,
+        color: textColor ?? textColorPrimary(context),
       ),
     );
   }

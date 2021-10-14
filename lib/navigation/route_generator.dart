@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:infitness/features/home/home_screen.dart';
-import 'package:infitness/navigation/home_navigator.dart';
+import 'package:infitness/navigation/infitness_navigator.dart';
+
+import 'screen_generator.dart';
 
 class RouteGenerator {
   RouteGenerator._();
@@ -17,8 +18,11 @@ class RouteGenerator {
     late Widget screen;
     switch (settings.name) {
       /* Home */
-      case HomeNavigator.HOME:
-        screen = HomeScreen();
+      case InfitnessNavigator.HOME:
+        screen = homeScreen(context, settings);
+        break;
+      case InfitnessNavigator.ADD_WORKOUT:
+        screen = addWorkoutScreen(context, settings);
         break;
       default:
         throw Exception('Unsupported route: ${settings.name}');

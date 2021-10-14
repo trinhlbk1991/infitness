@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:infitness/base/base_bloc_builder.dart';
 import 'package:infitness/base/base_bloc_listener.dart';
 import 'package:infitness/base/base_state.dart';
 import 'package:infitness/features/workoutlist/workout_list_cubit.dart';
 import 'package:infitness/features/workoutlist/workout_list_state.dart';
+import 'package:infitness/navigation/infitness_navigator.dart';
 import 'package:infitness/theme/dimensions.dart';
 import 'package:infitness/widgets/alert_bottom_sheet.dart';
-import 'package:provider/provider.dart';
 
 import 'widgets/sliver_app_bar.dart';
 import 'widgets/workout_card.dart';
@@ -24,7 +25,7 @@ class _WorkoutListScreenState extends BaseState<WorkoutListScreen> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _cubit = Provider.of(context);
+    _cubit = BlocProvider.of(context);
     _cubit.loadWorkouts();
   }
 
@@ -37,10 +38,10 @@ class _WorkoutListScreenState extends BaseState<WorkoutListScreen> {
   @override
   Widget build(BuildContext context) {
     return BaseBlocListener<WorkoutListCubit, WorkoutListState>(
-      showLog: true,
+      showLog: false,
       listener: _onStateChanged,
       child: BaseBlocBuilder<WorkoutListCubit, WorkoutListState>(
-        showLog: true,
+        showLog: false,
         builder: (context, state) {
           return NestedScrollView(
             headerSliverBuilder: (context, innerBoxIsScrolled) => [
@@ -60,7 +61,15 @@ class _WorkoutListScreenState extends BaseState<WorkoutListScreen> {
         return WorkoutCard(
           workout: state.workouts[index],
           onStart: (workout) {},
-          onEdit: (workout) {},
+          onEdit: (workout) {
+            InfitnessNavigator.gotoAddWorkout(
+              context,
+              workout: workout,
+              callback: () {
+                _cubit.loadWorkouts();
+              },
+            );
+          },
           onDelete: (workout) {
             showAlertBottomSheet(
               context,

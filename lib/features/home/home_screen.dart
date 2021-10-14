@@ -2,14 +2,18 @@ import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.da
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:infitness/base/base_state.dart';
+import 'package:infitness/features/home/home_cubit.dart';
 import 'package:infitness/features/workoutlist/workout_list_cubit.dart';
 import 'package:infitness/features/workoutlist/workout_list_screen.dart';
+import 'package:infitness/navigation/infitness_navigator.dart';
 import 'package:infitness/theme/colors.dart';
 import 'package:infitness/theme/dimensions.dart';
 import 'package:infitness/widgets/animated_indexed_stack.dart';
 import 'package:infitness/widgets/app_text.dart';
 
 class HomeScreen extends StatefulWidget {
+  HomeScreen({Key? key});
+
   @override
   State createState() {
     return _HomeScreenState();
@@ -17,25 +21,28 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends BaseState<HomeScreen> {
+  late HomeCubit _cubit;
   int _currentTab = 0;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
+    _cubit = BlocProvider.of(context);
   }
 
   @override
   Widget build(BuildContext context) {
-    return scaffoldSafe(
+    return scaffold(
       child: Column(
         children: [
           Expanded(
             child: AnimatedIndexedStack(
               index: _currentTab,
               children: [
-                RepositoryProvider<WorkoutListCubit>(
+                BlocProvider<WorkoutListCubit>(
                   create: (context) => WorkoutListCubit(
                     workoutHive: RepositoryProvider.of(context),
+                    homeCubit: _cubit,
                   ),
                   child: WorkoutListScreen(),
                 ),
@@ -70,7 +77,15 @@ class _HomeScreenState extends BaseState<HomeScreen> {
       );
 
   Widget? _buildFab() {
-    return _fab(Icons.add_rounded, () {});
+    return _fab(
+      Icons.add_rounded,
+      () => InfitnessNavigator.gotoAddWorkout(
+        context,
+        callback: () {
+          _cubit.reloadWorkoutList();
+        },
+      ),
+    );
   }
 
   Widget _fab(IconData icon, VoidCallback onPressed) => FloatingActionButton(

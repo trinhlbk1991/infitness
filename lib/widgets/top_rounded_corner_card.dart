@@ -4,8 +4,9 @@ import 'package:infitness/theme/dimensions.dart';
 
 class TopRoundedCornerCard extends StatelessWidget {
   final Widget? child;
+  final EdgeInsets? padding;
 
-  TopRoundedCornerCard({this.child});
+  TopRoundedCornerCard({this.child, this.padding});
 
   @override
   Widget build(BuildContext context) {
@@ -24,6 +25,7 @@ class TopRoundedCornerCard extends StatelessWidget {
           ),
         ],
       ),
+      padding: padding,
       child: child,
     );
   }
