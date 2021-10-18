@@ -24,6 +24,9 @@ class RouteGenerator {
       case InfitnessNavigator.ADD_WORKOUT:
         screen = addWorkoutScreen(context, settings);
         break;
+      case InfitnessNavigator.START_WORKOUT:
+        screen = startWorkoutScreen(context, settings);
+        break;
       default:
         throw Exception('Unsupported route: ${settings.name}');
     }

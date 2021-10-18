@@ -5,15 +5,17 @@ import 'package:infitness/theme/dimensions.dart';
 
 import 'app_text.dart';
 
-Widget appBar(BuildContext context, String title) {
+Widget appBar(BuildContext context, String title,
+    {double elevation = 4.0, Function? onBackPress}) {
   return AppBar(
+    elevation: elevation,
     title: Container(
       width: double.infinity,
       child: AppText(
         title,
         style: Theme.of(context).textTheme.headline6?.copyWith(
-          color: secondaryColor(context),
-        ),
+              color: secondaryColor(context),
+            ),
       ),
     ),
     titleSpacing: Spacing.SUPER_TINY,
@@ -23,7 +25,8 @@ Widget appBar(BuildContext context, String title) {
         Icons.arrow_back_ios_rounded,
         color: secondaryColor(context),
       ),
-      onPressed: () => Navigator.of(context).pop(),
+      onPressed: () =>
+          onBackPress != null ? onBackPress() : Navigator.of(context).pop(),
     ),
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.vertical(

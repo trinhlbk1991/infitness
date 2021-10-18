@@ -24,6 +24,7 @@ dependencies:
   expandable: ^5.0.1
   dotted_border: ^2.0.0
   group_button: ^3.3.1
+  simple_timer: ^2.0.0
 
   equatable: ^2.0.3
   tuple: ^2.0.0

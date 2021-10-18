@@ -11,7 +11,6 @@ import 'package:infitness/model/set.dart';
 import 'package:infitness/model/workout.dart';
 import 'package:infitness/theme/colors.dart';
 import 'package:infitness/theme/dimensions.dart';
-import 'package:infitness/utils/log.dart';
 import 'package:infitness/widgets/app_bar.dart';
 import 'package:infitness/widgets/app_text.dart';
 import 'package:infitness/widgets/buttons/app_buttons.dart';
@@ -19,7 +18,6 @@ import 'package:infitness/widgets/column_builder.dart';
 import 'package:infitness/widgets/edit_text.dart';
 import 'package:infitness/widgets/space.dart';
 import 'package:infitness/widgets/top_rounded_corner_card.dart';
-import 'package:provider/provider.dart';
 
 import 'add_workout_state.dart';
 
@@ -60,10 +58,10 @@ class _AddWorkoutScreenState extends BaseState<AddWorkoutScreen> {
   @override
   Widget build(BuildContext context) {
     return BaseBlocListener<AddWorkoutCubit, AddWorkoutState>(
-      showLog: true,
+      showLog: false,
       listener: _onStateChanged,
       child: BaseBlocBuilder<AddWorkoutCubit, AddWorkoutState>(
-        showLog: true,
+        showLog: false,
         builder: (context, state) {
           return scaffoldSafe(
             child: Column(

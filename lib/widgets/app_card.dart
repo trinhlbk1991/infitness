@@ -6,6 +6,8 @@ Widget card({
   required Widget child,
   EdgeInsets? margin,
   Color? color,
+  Color? borderColor,
+  double? borderWidth,
   EdgeInsets? padding,
 }) {
   return Card(
@@ -14,6 +16,9 @@ Widget card({
     clipBehavior: Clip.antiAliasWithSaveLayer,
     margin: margin,
     shape: RoundedRectangleBorder(
+      side: borderColor != null
+          ? BorderSide(color: borderColor, width: borderWidth ?? 0)
+          : BorderSide.none,
       borderRadius: BorderRadius.circular(AppRadius.CARD),
     ),
     elevation: Spacing.ELEVATION,

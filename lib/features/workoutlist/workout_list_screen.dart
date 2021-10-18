@@ -60,7 +60,9 @@ class _WorkoutListScreenState extends BaseState<WorkoutListScreen> {
       itemBuilder: (context, index) {
         return WorkoutCard(
           workout: state.workouts[index],
-          onStart: (workout) {},
+          onStart: (workout) {
+            InfitnessNavigator.gotoStartWorkout(context, workout: workout);
+          },
           onEdit: (workout) {
             InfitnessNavigator.gotoAddWorkout(
               context,
