@@ -47,3 +47,5 @@ Color secondaryColor(BuildContext context) =>
 
 Color secondaryColorVariant(BuildContext context) =>
     Theme.of(context).colorScheme.secondaryVariant;
+
+Color secondaryColorLight(BuildContext context) => AppColors.SECONDARY_LIGHT;

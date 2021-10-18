@@ -11,7 +11,6 @@ import 'package:infitness/model/set.dart';
 import 'package:infitness/model/workout.dart';
 import 'package:infitness/theme/colors.dart';
 import 'package:infitness/theme/dimensions.dart';
-import 'package:infitness/utils/log.dart';
 import 'package:infitness/widgets/app_bar.dart';
 import 'package:infitness/widgets/app_text.dart';
 import 'package:infitness/widgets/buttons/app_buttons.dart';
@@ -19,7 +18,6 @@ import 'package:infitness/widgets/column_builder.dart';
 import 'package:infitness/widgets/edit_text.dart';
 import 'package:infitness/widgets/space.dart';
 import 'package:infitness/widgets/top_rounded_corner_card.dart';
-import 'package:provider/provider.dart';
 
 import 'add_workout_state.dart';
 
@@ -60,10 +58,10 @@ class _AddWorkoutScreenState extends BaseState<AddWorkoutScreen> {
   @override
   Widget build(BuildContext context) {
     return BaseBlocListener<AddWorkoutCubit, AddWorkoutState>(
-      showLog: true,
+      showLog: false,
       listener: _onStateChanged,
       child: BaseBlocBuilder<AddWorkoutCubit, AddWorkoutState>(
-        showLog: true,
+        showLog: false,
         builder: (context, state) {
           return scaffoldSafe(
             child: Column(
@@ -108,11 +106,15 @@ class _AddWorkoutScreenState extends BaseState<AddWorkoutScreen> {
     );
   }
 
-  Widget _btnAddSet() => Container(
+  Widget _btnAddSet() =>
+      Container(
         width: double.infinity,
         child: InkWell(
           borderRadius: BorderRadius.circular(AppRadius.DEFAULT),
-          onTap: () => _cubit.addNewSet(),
+          onTap: () {
+            FocusScope.of(context).unfocus();
+            _cubit.addNewSet();
+          },
           child: DottedBorder(
             strokeWidth: 1.5,
             dashPattern: [5, 3],
@@ -139,6 +141,7 @@ class _AddWorkoutScreenState extends BaseState<AddWorkoutScreen> {
           set: set,
           margin: EdgeInsets.only(bottom: Spacing.NORMAL),
           onRepeatChanged: (repeat) {
+            FocusScope.of(context).unfocus();
             _cubit.updateRepeat(index, repeat);
           },
           onAddExercise: (set) {
@@ -150,9 +153,11 @@ class _AddWorkoutScreenState extends BaseState<AddWorkoutScreen> {
             });
           },
           onDeleteExercise: (exerciseIndex) {
+            FocusScope.of(context).unfocus();
             _cubit.deleteExercise(index, exerciseIndex);
           },
           onEditExercise: (pair) {
+            FocusScope.of(context).unfocus();
             showAddExerciseDialog(
               context,
               exercise: pair.item2,
@@ -166,7 +171,8 @@ class _AddWorkoutScreenState extends BaseState<AddWorkoutScreen> {
     );
   }
 
-  Widget _editTextName() => EditText(
+  Widget _editTextName() =>
+      EditText(
         hint: 'Workout Name',
         controller: nameTextController,
         autoFocus: true,
@@ -178,7 +184,8 @@ class _AddWorkoutScreenState extends BaseState<AddWorkoutScreen> {
         },
       );
 
-  Container _btnSave() => Container(
+  Container _btnSave() =>
+      Container(
         width: double.infinity,
         child: TopRoundedCornerCard(
           padding: EdgeInsets.all(Spacing.NORMAL),

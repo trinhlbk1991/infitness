@@ -4,6 +4,7 @@ import 'package:infitness/model/exercise.dart';
 import 'package:infitness/theme/colors.dart';
 import 'package:infitness/theme/dimensions.dart';
 import 'package:infitness/theme/text_styles.dart';
+import 'package:infitness/utils/log.dart';
 import 'package:infitness/utils/view_utils.dart';
 import 'package:infitness/widgets/app_text.dart';
 import 'package:infitness/widgets/buttons/app_buttons.dart';
@@ -17,21 +18,22 @@ void showAddExerciseDialog(
   Exercise? exercise,
   required ValueChanged<Exercise> onSave,
 }) {
+  final controller = TextEditingController();
+  final formKey = GlobalKey<FormState>();
+  var type = (exercise != null && exercise.rep > 0) ? REPS : TIMER;
+  var minutes = exercise != null ? exercise.time ~/ 60 : 0;
+  var seconds = exercise != null ? exercise.time % 60 : 30;
+  var reps = exercise != null ? exercise.rep : 15;
+
+  if (exercise != null) {
+    controller.text = exercise.name;
+  }
+
   showModalBottomSheet(
     context: context,
     backgroundColor: Colors.transparent,
+    isScrollControlled: true,
     builder: (BuildContext context) {
-      final controller = TextEditingController();
-      final formKey = GlobalKey<FormState>();
-      var type = (exercise != null && exercise.rep > 0) ? REPS : TIMER;
-      var minutes = exercise != null ? exercise.time ~/ 60 : 0;
-      var seconds = exercise != null ? exercise.time % 60 : 30;
-      var reps = exercise != null ? exercise.rep : 15;
-
-      if (exercise != null) {
-        controller.text = exercise.name;
-      }
-
       return StatefulBuilder(
         builder: (context, setState) {
           return Wrap(
@@ -39,8 +41,15 @@ void showAddExerciseDialog(
               Container(
                 width: double.infinity,
                 child: TopRoundedCornerCard(
-                  child: padding(
-                    padding: AppRadius.BOTTOM_SHEET,
+                  child: AnimatedPadding(
+                    duration: Duration(milliseconds: 150),
+                    curve: Curves.easeOut,
+                    padding: EdgeInsets.only(
+                      top: AppRadius.BOTTOM_SHEET,
+                      left: AppRadius.BOTTOM_SHEET,
+                      right: AppRadius.BOTTOM_SHEET,
+                      bottom: MediaQuery.of(context).viewInsets.bottom,
+                    ),
                     child: Form(
                       key: formKey,
                       child: Column(
@@ -84,6 +93,7 @@ void showAddExerciseDialog(
                                     rep: type == REPS ? reps : 0,
                                   );
                                   onSave(exercise);
+                                  FocusScope.of(context).unfocus();
                                   Navigator.of(context).pop();
                                 }
                               }),
@@ -228,6 +238,7 @@ _btnCancel(BuildContext context) => Expanded(
       child: PrimaryOutlineButton(
         text: 'Cancel',
         onPressed: () {
+          FocusScope.of(context).unfocus();
           Navigator.of(context).pop();
         },
       ),
