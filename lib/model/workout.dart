@@ -24,8 +24,8 @@ class Workout {
   final int updatedAt;
 
   Workout({
-    required this.id,
-    required this.name,
+    this.id = '',
+    this.name = '',
     this.sets = const [],
     this.isDeleted = false,
     this.createdAt = 0,

@@ -8,6 +8,7 @@ import 'package:infitness/utils/date_time_utils.dart';
 import 'package:infitness/utils/view_utils.dart';
 import 'package:infitness/widgets/app_card.dart';
 import 'package:infitness/widgets/app_text.dart';
+import 'package:infitness/widgets/buttons/icon_button.dart';
 import 'package:infitness/widgets/column_builder.dart';
 import 'package:infitness/widgets/space.dart';
 
@@ -110,18 +111,10 @@ class WorkoutCard extends StatelessWidget {
             ),
           ),
           Space(),
-          ElevatedButton(
+          iconButton(
+            context,
+            icon: Icons.play_arrow_rounded,
             onPressed: () => onStart(workout),
-            child: Icon(
-              Icons.play_arrow_rounded,
-              color: Colors.white,
-              size: 32,
-            ),
-            style: ElevatedButton.styleFrom(
-              shape: CircleBorder(),
-              primary: Theme.of(context).colorScheme.secondary,
-              fixedSize: Size(56, 56),
-            ),
           ),
         ],
       ),

@@ -7,17 +7,17 @@ import 'buttons/app_buttons.dart';
 import 'space.dart';
 import 'top_rounded_corner_card.dart';
 
-void showAlertBottomSheet(
+Future<dynamic> showAlertBottomSheet(
   BuildContext context, {
   required String title,
   required String message,
   String positiveText = 'OK',
-  String negativeText = 'Cancel',
+  String? negativeText = 'Cancel',
   Function? positiveClicked,
   Function? negativeClicked,
   PositiveStyle positiveStyle = PositiveStyle.outline,
 }) {
-  showModalBottomSheet(
+  return showModalBottomSheet(
     context: context,
     backgroundColor: Colors.transparent,
     builder: (BuildContext context) {
@@ -37,8 +37,11 @@ void showAlertBottomSheet(
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        _negativeBtn(negativeText, context, negativeClicked),
-                        Space(),
+                        negativeText != null
+                            ? _negativeBtn(
+                                negativeText, context, negativeClicked)
+                            : Container(),
+                        Space(size: negativeText != null ? Spacing.NORMAL : 0),
                         _positiveBtn(positiveText, context, positiveClicked,
                             positiveStyle)
                       ],
