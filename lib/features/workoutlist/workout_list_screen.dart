@@ -8,6 +8,7 @@ import 'package:infitness/features/workoutlist/workout_list_state.dart';
 import 'package:infitness/navigation/infitness_navigator.dart';
 import 'package:infitness/theme/dimensions.dart';
 import 'package:infitness/widgets/alert_bottom_sheet.dart';
+import 'package:infitness/widgets/app_text.dart';
 
 import 'widgets/sliver_app_bar.dart';
 import 'widgets/workout_card.dart';
@@ -47,11 +48,15 @@ class _WorkoutListScreenState extends BaseState<WorkoutListScreen> {
             headerSliverBuilder: (context, innerBoxIsScrolled) => [
               sliverAppBar(context),
             ],
-            body: _workoutList(state),
+            body: state.workouts.isEmpty ? _noWorkout() : _workoutList(state),
           );
         },
       ),
     );
+  }
+
+  Widget _noWorkout() {
+    return Center(child: AppText('You don\'t have any workouts yet'));
   }
 
   ListView _workoutList(WorkoutListState state) {
