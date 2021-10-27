@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:infitness/model/exercise.dart';
 import 'package:infitness/theme/colors.dart';
 import 'package:infitness/theme/dimensions.dart';
-import 'package:infitness/utils/log.dart';
 import 'package:infitness/utils/view_utils.dart';
 import 'package:infitness/widgets/app_text.dart';
 import 'package:infitness/widgets/buttons/icon_button.dart';

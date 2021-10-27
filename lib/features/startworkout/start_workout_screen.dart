@@ -6,7 +6,6 @@ import 'package:infitness/features/startworkout/start_workout_cubit.dart';
 import 'package:infitness/features/startworkout/start_workout_state.dart';
 import 'package:infitness/model/exercise.dart';
 import 'package:infitness/model/workout.dart';
-import 'package:infitness/utils/log.dart';
 import 'package:infitness/utils/screen_size_utils.dart';
 import 'package:infitness/widgets/alert_bottom_sheet.dart';
 import 'package:infitness/widgets/app_bar.dart';
@@ -63,7 +62,7 @@ class _StartWorkoutScreenState extends BaseState<StartWorkoutScreen>
         return _showConfirmExitDialog();
       },
       child: BaseBlocBuilder<StartWorkoutCubit, StartWorkoutState>(
-        showLog: true,
+        showLog: false,
         builder: (context, state) {
           return scaffoldSafe(
             child: Column(
@@ -158,7 +157,7 @@ class _StartWorkoutScreenState extends BaseState<StartWorkoutScreen>
         _timerController.duration = Duration(seconds: exercise.time);
         _timerController.restart();
       } else {
-        _timerController.pause();
+        _timerController.value = _timerController.upperBound;
       }
     } else if (state is StartWorkoutState_Backward) {
       if (exercise.time > 0) {
