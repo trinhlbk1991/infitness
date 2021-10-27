@@ -106,11 +106,15 @@ class _AddWorkoutScreenState extends BaseState<AddWorkoutScreen> {
     );
   }
 
-  Widget _btnAddSet() => Container(
+  Widget _btnAddSet() =>
+      Container(
         width: double.infinity,
         child: InkWell(
           borderRadius: BorderRadius.circular(AppRadius.DEFAULT),
-          onTap: () => _cubit.addNewSet(),
+          onTap: () {
+            FocusScope.of(context).unfocus();
+            _cubit.addNewSet();
+          },
           child: DottedBorder(
             strokeWidth: 1.5,
             dashPattern: [5, 3],
@@ -137,6 +141,7 @@ class _AddWorkoutScreenState extends BaseState<AddWorkoutScreen> {
           set: set,
           margin: EdgeInsets.only(bottom: Spacing.NORMAL),
           onRepeatChanged: (repeat) {
+            FocusScope.of(context).unfocus();
             _cubit.updateRepeat(index, repeat);
           },
           onAddExercise: (set) {
@@ -148,9 +153,11 @@ class _AddWorkoutScreenState extends BaseState<AddWorkoutScreen> {
             });
           },
           onDeleteExercise: (exerciseIndex) {
+            FocusScope.of(context).unfocus();
             _cubit.deleteExercise(index, exerciseIndex);
           },
           onEditExercise: (pair) {
+            FocusScope.of(context).unfocus();
             showAddExerciseDialog(
               context,
               exercise: pair.item2,
@@ -164,7 +171,8 @@ class _AddWorkoutScreenState extends BaseState<AddWorkoutScreen> {
     );
   }
 
-  Widget _editTextName() => EditText(
+  Widget _editTextName() =>
+      EditText(
         hint: 'Workout Name',
         controller: nameTextController,
         autoFocus: true,
@@ -176,7 +184,8 @@ class _AddWorkoutScreenState extends BaseState<AddWorkoutScreen> {
         },
       );
 
-  Container _btnSave() => Container(
+  Container _btnSave() =>
+      Container(
         width: double.infinity,
         child: TopRoundedCornerCard(
           padding: EdgeInsets.all(Spacing.NORMAL),

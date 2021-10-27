@@ -5,10 +5,12 @@ import 'package:infitness/theme/dimensions.dart';
 import 'package:infitness/utils/view_utils.dart';
 import 'package:infitness/widgets/app_text.dart';
 import 'package:infitness/widgets/buttons/icon_button.dart';
+import 'package:infitness/widgets/simple_timer.dart';
 import 'package:infitness/widgets/space.dart';
-import 'package:simple_timer/simple_timer.dart';
 
 enum TimerState { IDLE, PLAYING, PAUSED }
+
+double _PADDING = 48.0;
 
 Widget exerciseTimer(
   BuildContext context, {
@@ -35,7 +37,16 @@ Widget exerciseTimer(
           height: height - 30,
           child: Column(
             children: [
-              _timer(context, exercise, timerController, onTimerFinished),
+              Expanded(
+                child: exercise.time > 0
+                    ? _timer(
+                        context,
+                        exercise,
+                        timerController,
+                        onTimerFinished,
+                      )
+                    : _indeterminateProgress(context, exercise),
+              ),
               AppText(
                 exercise.name,
                 style: Theme.of(context).textTheme.headline4,
@@ -67,6 +78,41 @@ Widget exerciseTimer(
         ),
       ],
     ),
+  );
+}
+
+Widget _indeterminateProgress(BuildContext context, Exercise exercise) {
+  return Stack(
+    children: [
+      AspectRatio(
+        aspectRatio: 1,
+        child: Container(
+          padding: EdgeInsets.all(_PADDING),
+          child: CircularProgressIndicator(
+            valueColor: AlwaysStoppedAnimation<Color>(secondaryColor(context)),
+            backgroundColor: secondaryColor(context).withOpacity(0.1),
+            strokeWidth: 20,
+          ),
+        ),
+      ),
+      Positioned.fill(
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              AppText(
+                '${exercise.rep}',
+                style: Theme.of(context)
+                    .textTheme
+                    .headline1
+                    ?.copyWith(color: secondaryColor(context)),
+              ),
+              headline5Text(context, 'reps')
+            ],
+          ),
+        ),
+      )
+    ],
   );
 }
 
@@ -112,21 +158,24 @@ Widget _navigationButtons(
   return paddingOnly(
     left: Spacing.LARGE,
     right: Spacing.LARGE,
+    bottom: Spacing.NORMAL,
     child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         canBackward
-            ? iconButton(
+            ? iconOutlineButton(
                 context,
                 icon: Icons.fast_rewind_rounded,
+                color: secondaryColor(context),
                 buttonSize: 44,
                 iconSize: 28,
                 onPressed: () => onPreviousTapped(exercise),
               )
             : Expanded(child: Container()),
-        iconButton(
+        iconOutlineButton(
           context,
           icon: canForward ? Icons.fast_forward_rounded : Icons.stop_rounded,
+          color: secondaryColor(context),
           buttonSize: 44,
           iconSize: 28,
           onPressed: () =>
@@ -144,44 +193,22 @@ Widget _timer(
   Function(Exercise) onTimerFinished,
 ) {
   return Padding(
-    padding: EdgeInsets.all(Spacing.LARGE),
-    child: Stack(
-      children: [
-        SimpleTimer(
-          duration: Duration(seconds: 30),
-          controller: timerController,
-          progressTextStyle: Theme.of(context)
-              .textTheme
-              .headline1
-              ?.copyWith(color: secondaryColor(context)),
-          displayProgressText: exercise.time > 0,
-          progressTextFormatter: _progressTextFormatter,
-          progressIndicatorDirection: TimerProgressIndicatorDirection.clockwise,
-          progressIndicatorColor: secondaryColor(context),
-          backgroundColor: secondaryColor(context).withOpacity(0.1),
-          strokeWidth: 20,
-          onEnd: () => onTimerFinished(exercise),
-        ),
-        exercise.rep > 0
-            ? Positioned.fill(
-                child: Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      AppText(
-                        '${exercise.rep}',
-                        style: Theme.of(context)
-                            .textTheme
-                            .headline1
-                            ?.copyWith(color: secondaryColor(context)),
-                      ),
-                      headline5Text(context, 'reps')
-                    ],
-                  ),
-                ),
-              )
-            : Container(),
-      ],
+    padding: EdgeInsets.all(_PADDING),
+    child: SimpleTimer(
+      duration: Duration(seconds: exercise.time),
+      controller: timerController,
+      progressTextStyle: Theme.of(context)
+          .textTheme
+          .headline1
+          ?.copyWith(color: secondaryColor(context)),
+      displayProgressText: exercise.time > 0,
+      progressTextFormatter: _progressTextFormatter,
+      progressIndicatorDirection: TimerProgressIndicatorDirection.clockwise,
+      progressIndicatorColor: secondaryColor(context),
+      backgroundColor: secondaryColor(context).withOpacity(0.1),
+      strokeWidth: 20,
+      onEnd: () => onTimerFinished(exercise),
+      valueListener: (value) {},
     ),
   );
 }

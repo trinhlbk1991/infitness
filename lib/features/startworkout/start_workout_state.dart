@@ -74,7 +74,7 @@ class StartWorkoutState extends Equatable {
       for (; setRepeatIndex < set.repeat; setRepeatIndex++) {
         int exerciseIndex =
             (setIndex == currentSet && setRepeatIndex == currentSetRepeat)
-                ? currentExercise
+                ? currentExercise + 1
                 : 0;
         for (; exerciseIndex < set.exercises.length; exerciseIndex++) {
           result.add(set.exercises[exerciseIndex]);

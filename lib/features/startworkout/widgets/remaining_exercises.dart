@@ -32,7 +32,6 @@ Widget animateExerciseCard(
 
 Widget _exerciseCard(BuildContext context, int index, Exercise exercise) =>
     card(
-      borderColor: index == 0 ? secondaryColor(context) : null,
       borderWidth: 2,
       margin: EdgeInsets.only(
         left: Spacing.NORMAL,

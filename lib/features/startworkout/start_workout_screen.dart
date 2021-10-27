@@ -9,7 +9,7 @@ import 'package:infitness/model/workout.dart';
 import 'package:infitness/utils/screen_size_utils.dart';
 import 'package:infitness/widgets/alert_bottom_sheet.dart';
 import 'package:infitness/widgets/app_bar.dart';
-import 'package:simple_timer/simple_timer.dart';
+import 'package:infitness/widgets/simple_timer.dart';
 
 import 'widgets/exercise_timer.dart';
 import 'widgets/remaining_exercises.dart';
@@ -91,7 +91,9 @@ class _StartWorkoutScreenState extends BaseState<StartWorkoutScreen>
                         height: screenHeight * 3 / 5,
                         onStartTapped: () {
                           _cubit.startExercise();
-                          _timerController.start();
+                          if (_timerController.duration != Duration.zero) {
+                            _timerController.start();
+                          }
                         },
                         onPauseTapped: () {
                           _cubit.pauseExercise();
@@ -99,7 +101,9 @@ class _StartWorkoutScreenState extends BaseState<StartWorkoutScreen>
                         },
                         onResumeTapped: () {
                           _cubit.resumeExercise();
-                          _timerController.start();
+                          if (_timerController.duration != Duration.zero) {
+                            _timerController.start();
+                          }
                         },
                         onNextTapped: (exercise) {
                           _removeTopExercise(exercise);
@@ -160,7 +164,7 @@ class _StartWorkoutScreenState extends BaseState<StartWorkoutScreen>
         _timerController.duration = Duration(seconds: exercise.time);
         _timerController.restart();
       } else {
-        _timerController.value = _timerController.upperBound;
+        _timerController.pause();
       }
     }
   }

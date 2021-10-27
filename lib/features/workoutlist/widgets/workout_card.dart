@@ -78,14 +78,12 @@ class WorkoutCard extends StatelessWidget {
     IconData icon,
     ValueChanged<Workout> onPressed,
   ) {
-    return ElevatedButton(
+    return iconOutlineButton(
+      context,
+      icon: icon,
       onPressed: () => onPressed(workout),
-      style: ElevatedButton.styleFrom(
-        shape: CircleBorder(),
-        padding: EdgeInsets.all(Spacing.SMALL),
-        primary: Theme.of(context).cardColor,
-      ),
-      child: Icon(icon, color: Theme.of(context).colorScheme.secondary),
+      buttonSize: 36,
+      iconSize: 20,
     );
   }
 
