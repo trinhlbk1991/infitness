@@ -83,6 +83,11 @@ class StartWorkoutState extends Equatable {
     }
     return result;
   }
+
+  @override
+  String toString() {
+    return 'StartWorkoutState_Forward{currentSet: $currentSet/${workout.sets.length}';
+  }
 }
 
 class StartWorkoutState_Init extends StartWorkoutState {
@@ -99,4 +104,5 @@ class StartWorkoutState_Backward extends StartWorkoutState {
 
 class StartWorkoutState_Finished extends StartWorkoutState {
   StartWorkoutState_Finished(StartWorkoutState state) : super.fromState(state);
+
 }

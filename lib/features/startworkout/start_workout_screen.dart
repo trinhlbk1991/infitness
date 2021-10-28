@@ -107,19 +107,16 @@ class _StartWorkoutScreenState extends BaseState<StartWorkoutScreen>
                           }
                         },
                         onNextTapped: (exercise) {
-                          _removeTopExercise(exercise);
                           _cubit.nextExercise();
                         },
                         onPreviousTapped: (exercise) {
-                          _addTopExercise();
                           _cubit.previousExercise();
                         },
                         onFinishTapped: (exercise) {
+                          _timerController.pause();
                           _showFinishDialog();
                         },
                         onTimerFinished: (exercise) {
-                          Log.i('KAIIIII', 'onTimerFinished');
-                          _removeTopExercise(exercise);
                           _cubit.nextExercise();
                         },
                       ),
@@ -155,6 +152,7 @@ class _StartWorkoutScreenState extends BaseState<StartWorkoutScreen>
         _timerController.duration = Duration(seconds: exercise.time);
       }
     } else if (state is StartWorkoutState_Forward) {
+      _removeTopExercise(exercise);
       if (exercise.time > 0) {
         _timerController.duration = Duration(seconds: exercise.time);
         _timerController.restart();
@@ -162,12 +160,15 @@ class _StartWorkoutScreenState extends BaseState<StartWorkoutScreen>
         _timerController.pause();
       }
     } else if (state is StartWorkoutState_Backward) {
+      _addTopExercise();
       if (exercise.time > 0) {
         _timerController.duration = Duration(seconds: exercise.time);
         _timerController.restart();
       } else {
         _timerController.pause();
       }
+    } else if (state is StartWorkoutState_Finished) {
+      _showFinishDialog();
     }
   }
 
