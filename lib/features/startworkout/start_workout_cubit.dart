@@ -1,7 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:infitness/features/startworkout/widgets/exercise_timer.dart';
 import 'package:infitness/model/workout.dart';
-import 'package:infitness/utils/log.dart';
 
 import 'start_workout_state.dart';
 
@@ -41,7 +40,6 @@ class StartWorkoutCubit extends Cubit<StartWorkoutState> {
       emit(StartWorkoutState_Forward(newState));
     } else if (state.currentSet + 1 < state.workout.sets.length) {
       // Move to next set
-      Log.i('KAIIIIII', 'Move to next set: ${state.workout.sets.length}, ${state.currentSet}');
       final newState = state.copyWith(
         currentSet: state.currentSet + 1,
         currentSetRepeat: 0,

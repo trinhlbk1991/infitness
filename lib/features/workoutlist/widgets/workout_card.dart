@@ -104,7 +104,7 @@ class WorkoutCard extends StatelessWidget {
                       ?.copyWith(fontWeight: FontWeight.w600),
                 ),
                 Space(size: Spacing.TINY),
-                body1Text(context, '00:00'),
+                body1Text(context, _workoutEstTime(workout)),
               ],
             ),
           ),
@@ -192,4 +192,16 @@ class WorkoutCard extends StatelessWidget {
       ),
     );
   }
+}
+
+String _workoutEstTime(Workout workout) {
+  var time = 0;
+  workout.sets.forEach((set) {
+    final setTime = set.exercises.fold(
+        0,
+        (previousValue, element) =>
+            (previousValue as int) + element.time + element.rep * 5);
+    time += setTime * set.repeat;
+  });
+  return DateTimeUtils.formatSeconds(time);
 }
