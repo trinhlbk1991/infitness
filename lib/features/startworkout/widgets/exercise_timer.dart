@@ -105,7 +105,7 @@ Widget _indeterminateProgress(BuildContext context, Exercise exercise) {
                 style: Theme.of(context)
                     .textTheme
                     .headline1
-                    ?.copyWith(color: secondaryColor(context)),
+                    ?.copyWith(color: secondaryColor(context), fontSize: 70),
               ),
               headline5Text(context, 'reps')
             ],
@@ -200,7 +200,7 @@ Widget _timer(
       progressTextStyle: Theme.of(context)
           .textTheme
           .headline1
-          ?.copyWith(color: secondaryColor(context)),
+          ?.copyWith(color: secondaryColor(context), fontSize: 70),
       displayProgressText: exercise.time > 0,
       progressTextFormatter: _progressTextFormatter,
       progressIndicatorDirection: TimerProgressIndicatorDirection.clockwise,

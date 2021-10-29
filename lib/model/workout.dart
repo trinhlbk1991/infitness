@@ -23,6 +23,12 @@ class Workout {
   @HiveField(5)
   final int updatedAt;
 
+  @HiveField(7)
+  final int restSet;
+
+  @HiveField(8)
+  final int restExercise;
+
   Workout({
     this.id = '',
     this.name = '',
@@ -30,6 +36,8 @@ class Workout {
     this.isDeleted = false,
     this.createdAt = 0,
     this.updatedAt = 0,
+    this.restSet = 0,
+    this.restExercise = 0,
   });
 
   Workout copyWith({
@@ -39,6 +47,8 @@ class Workout {
     bool? isDeleted,
     int? createdAt,
     int? updatedAt,
+    int? restSet,
+    int? restExercise,
   }) =>
       Workout(
         id: id ?? this.id,
@@ -47,10 +57,12 @@ class Workout {
         isDeleted: isDeleted ?? this.isDeleted,
         createdAt: createdAt ?? this.createdAt,
         updatedAt: updatedAt ?? this.updatedAt,
+        restSet: restSet ?? this.restSet,
+        restExercise: restExercise ?? this.restExercise,
       );
 
   @override
   String toString() {
-    return 'Workout{id: $id, name: $name, sets: $sets}';
+    return 'Workout{id: $id, name: $name, sets: ${sets.length}, restSet: $restSet, restExercise: $restExercise';
   }
 }

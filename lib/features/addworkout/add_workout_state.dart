@@ -6,11 +6,15 @@ class AddWorkoutState extends Equatable {
   final bool isAddMode;
   final String? workoutId;
   final List<Set> sets;
+  final int restSet;
+  final int restExercise;
 
   AddWorkoutState({
     this.isAddMode = true,
     this.workoutId,
     this.sets = const [],
+    this.restExercise = 30,
+    this.restSet = 60,
   });
 
   AddWorkoutState.fromState({
@@ -18,14 +22,19 @@ class AddWorkoutState extends Equatable {
     bool? isAddMode,
     String? workoutId,
     List<Set>? sets,
+    int? restSet,
+    int? restExercise,
   }) : this(
           isAddMode: isAddMode ?? state.isAddMode,
           workoutId: workoutId ?? state.workoutId,
           sets: sets ?? state.sets,
+          restSet: restSet ?? state.restSet,
+          restExercise: restExercise ?? state.restExercise,
         );
 
   @override
-  List<Object?> get props => [isAddMode, workoutId, sets];
+  List<Object?> get props =>
+      [isAddMode, workoutId, sets, restSet, restExercise];
 }
 
 class AddWorkout_SaveSuccess extends AddWorkoutState {
@@ -34,5 +43,7 @@ class AddWorkout_SaveSuccess extends AddWorkoutState {
           isAddMode: state.isAddMode,
           workoutId: state.workoutId,
           sets: state.sets,
+          restSet: state.restSet,
+          restExercise: state.restExercise,
         );
 }

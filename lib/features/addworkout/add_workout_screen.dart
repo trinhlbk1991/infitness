@@ -6,6 +6,7 @@ import 'package:infitness/base/base_bloc_listener.dart';
 import 'package:infitness/base/base_state.dart';
 import 'package:infitness/features/addworkout/add_workout_cubit.dart';
 import 'package:infitness/features/addworkout/widgets/add_exercise_dialog.dart';
+import 'package:infitness/features/addworkout/widgets/rest_settings_card.dart';
 import 'package:infitness/features/addworkout/widgets/set_card.dart';
 import 'package:infitness/model/set.dart';
 import 'package:infitness/model/workout.dart';
@@ -97,6 +98,14 @@ class _AddWorkoutScreenState extends BaseState<AddWorkoutScreen> {
           children: [
             _editTextName(),
             Space(),
+            restSettings(
+              context,
+              restSet: state.restSet,
+              restExercise: state.restExercise,
+              onUpdateRestSet: (value) => _cubit.updateRestSet(value),
+              onUpdateRestExercise: (value) => _cubit.updateRestExercise(value),
+            ),
+            Space(),
             _workoutSets(state.sets),
             Space(),
             _btnAddSet(),
@@ -106,8 +115,7 @@ class _AddWorkoutScreenState extends BaseState<AddWorkoutScreen> {
     );
   }
 
-  Widget _btnAddSet() =>
-      Container(
+  Widget _btnAddSet() => Container(
         width: double.infinity,
         child: InkWell(
           borderRadius: BorderRadius.circular(AppRadius.DEFAULT),
@@ -171,11 +179,9 @@ class _AddWorkoutScreenState extends BaseState<AddWorkoutScreen> {
     );
   }
 
-  Widget _editTextName() =>
-      EditText(
+  Widget _editTextName() => EditText(
         hint: 'Workout Name',
         controller: nameTextController,
-        autoFocus: true,
         validator: (value) {
           if (value == null || value.isEmpty) {
             return 'Workout name is required';
@@ -184,8 +190,7 @@ class _AddWorkoutScreenState extends BaseState<AddWorkoutScreen> {
         },
       );
 
-  Container _btnSave() =>
-      Container(
+  Container _btnSave() => Container(
         width: double.infinity,
         child: TopRoundedCornerCard(
           padding: EdgeInsets.all(Spacing.NORMAL),

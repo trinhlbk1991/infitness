@@ -123,33 +123,32 @@ class WorkoutCard extends StatelessWidget {
     return paddingOnly(
       child: ColumnBuilder(
         itemBuilder: (context, index) {
-          return _setItem(context, workout.sets[index]);
+          return _setItem(context, index, workout.sets[index]);
         },
         itemCount: workout.sets.length,
       ),
     );
   }
 
-  Widget _setItem(BuildContext context, Set set) {
-    final hasRepeat = set.repeat > 1;
+  Widget _setItem(BuildContext context, int index, Set set) {
     return Container(
       margin: EdgeInsets.only(
         top: Spacing.SMALL,
-        left: hasRepeat ? Spacing.NORMAL : Spacing.NORMAL_2,
-        right: hasRepeat ? Spacing.NORMAL : Spacing.NORMAL_2,
+        left: Spacing.NORMAL,
+        right: Spacing.NORMAL,
       ),
       padding: EdgeInsets.only(
-        left: hasRepeat ? Spacing.NORMAL : Spacing.SMALL,
-        right: hasRepeat ? Spacing.NORMAL : Spacing.SMALL,
+        left: Spacing.NORMAL,
+        right: Spacing.NORMAL,
         top: Spacing.SMALL,
         bottom: Spacing.SMALL,
       ),
-      decoration: set.repeat > 1
-          ? BoxDecoration(
-              color: secondaryColor(context).withOpacity(0.2),
-              borderRadius: BorderRadius.all(Radius.circular(8)),
-            )
-          : null,
+      decoration: BoxDecoration(
+        color: index % 2 == 0
+            ? secondaryColor(context).withOpacity(0.15)
+            : Colors.grey[100]!.withOpacity(0.9),
+        borderRadius: BorderRadius.all(Radius.circular(8)),
+      ),
       child: Stack(
         children: [
           ColumnBuilder(
@@ -176,7 +175,7 @@ class WorkoutCard extends StatelessWidget {
             },
             itemCount: set.exercises.length,
           ),
-          hasRepeat
+          set.repeat > 1
               ? Positioned.fill(
                   child: Align(
                     alignment: Alignment.centerRight,
@@ -200,8 +199,11 @@ String _workoutEstTime(Workout workout) {
     final setTime = set.exercises.fold(
         0,
         (previousValue, element) =>
-            (previousValue as int) + element.time + element.rep * 5);
-    time += setTime * set.repeat;
+            (previousValue as int) +
+            element.time +
+            element.rep * 5 +
+            workout.restExercise);
+    time += (setTime + workout.restSet) * set.repeat;
   });
   return DateTimeUtils.formatSeconds(time);
 }

@@ -4,7 +4,6 @@ import 'package:infitness/features/addworkout/add_workout_state.dart';
 import 'package:infitness/model/exercise.dart';
 import 'package:infitness/model/set.dart';
 import 'package:infitness/model/workout.dart';
-import 'package:infitness/utils/log.dart';
 import 'package:uuid/uuid.dart';
 
 class AddWorkoutCubit extends Cubit<AddWorkoutState> {
@@ -18,10 +17,13 @@ class AddWorkoutCubit extends Cubit<AddWorkoutState> {
     if (state.workoutId != null) {
       return;
     }
+
     emit(AddWorkoutState(
       isAddMode: workout == null,
       workoutId: workout?.id ?? Uuid().v1(),
       sets: workout?.sets ?? [Set()],
+      restSet: workout?.restSet ?? 60,
+      restExercise: workout?.restExercise ?? 30,
     ));
   }
 
@@ -85,9 +87,19 @@ class AddWorkoutCubit extends Cubit<AddWorkoutState> {
       id: state.workoutId ?? Uuid().v1(),
       name: name,
       sets: sets,
+      restSet: state.restSet,
+      restExercise: state.restExercise,
     );
     _workoutHive.save(workout);
 
     emit(AddWorkout_SaveSuccess(state));
+  }
+
+  updateRestSet(int value) {
+    emit(AddWorkoutState.fromState(state: state, restSet: value));
+  }
+
+  updateRestExercise(int value) {
+    emit(AddWorkoutState.fromState(state: state, restExercise: value));
   }
 }

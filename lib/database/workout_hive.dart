@@ -1,5 +1,6 @@
 import 'package:infitness/database/hive_utils.dart';
 import 'package:infitness/model/workout.dart';
+import 'package:infitness/utils/date_time_utils.dart';
 
 class WorkoutHive {
   final _box = HiveUtils.boxWorkout();
@@ -17,7 +18,17 @@ class WorkoutHive {
   }
 
   save(Workout workout) {
-    _box.put(workout.id, workout);
+    final existedWorkout = getById(workout.id);
+    final createdAt =
+        existedWorkout?.createdAt ?? DateTimeUtils.currentTimeUtc();
+    final updatedAt = DateTimeUtils.currentTimeUtc();
+    _box.put(
+      workout.id,
+      workout.copyWith(
+        createdAt: createdAt,
+        updatedAt: updatedAt,
+      ),
+    );
   }
 
   saveList(List<Workout> workouts) {
