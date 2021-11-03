@@ -1,11 +1,16 @@
+import 'dart:io';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 import 'package:infitness/base/base_bloc_builder.dart';
 import 'package:infitness/base/base_state.dart';
 import 'package:infitness/features/startworkout/start_workout_cubit.dart';
 import 'package:infitness/features/startworkout/start_workout_state.dart';
 import 'package:infitness/model/exercise.dart';
 import 'package:infitness/model/workout.dart';
+import 'package:infitness/utils/date_time_utils.dart';
 import 'package:infitness/utils/log.dart';
 import 'package:infitness/utils/screen_size_utils.dart';
 import 'package:infitness/widgets/alert_bottom_sheet.dart';
@@ -31,10 +36,15 @@ class _StartWorkoutScreenState extends BaseState<StartWorkoutScreen>
   late TimerController _timerController;
   final _listViewKey = GlobalKey<AnimatedListState>();
 
+  late FlutterTts _flutterTts;
+  String? language;
+  String? engine;
+
   @override
   void initState() {
     super.initState();
     _timerController = TimerController(this);
+    _initTts();
   }
 
   @override
@@ -49,6 +59,7 @@ class _StartWorkoutScreenState extends BaseState<StartWorkoutScreen>
 
   @override
   void dispose() {
+    _flutterTts.stop();
     _timerController.dispose();
     _cubit.close();
     super.dispose();
@@ -95,6 +106,7 @@ class _StartWorkoutScreenState extends BaseState<StartWorkoutScreen>
                           if (_timerController.duration != Duration.zero) {
                             _timerController.start();
                           }
+                          _speakExercise(state.getCurrentExercise());
                         },
                         onPauseTapped: () {
                           _cubit.pauseExercise();
@@ -159,6 +171,7 @@ class _StartWorkoutScreenState extends BaseState<StartWorkoutScreen>
       } else {
         _timerController.pause();
       }
+      _speakExercise(exercise);
     } else if (state is StartWorkoutState_Backward) {
       _addTopExercise();
       if (exercise.time > 0) {
@@ -203,5 +216,52 @@ class _StartWorkoutScreenState extends BaseState<StartWorkoutScreen>
       },
       negativeText: null,
     );
+  }
+
+  bool get isIOS => !kIsWeb && Platform.isIOS;
+
+  bool get isAndroid => !kIsWeb && Platform.isAndroid;
+
+  bool get isWeb => kIsWeb;
+
+  _initTts() {
+    _flutterTts = FlutterTts();
+
+    if (isAndroid) {
+      _getDefaultEngine();
+    }
+
+    _flutterTts.setErrorHandler((msg) {
+      Log.e('StartWorkoutScreen', 'TTS exercise name failed: $msg');
+    });
+  }
+
+  Future _getDefaultEngine() async {
+    var engine = await _flutterTts.getDefaultEngine;
+    if (engine != null) {
+      print(engine);
+    }
+  }
+
+  Future _speakExercise(Exercise exercise) async {
+    var text = '';
+    if (exercise.rep > 0) {
+      text += '${exercise.rep} reps ';
+    }
+    if (exercise.time > 0) {
+      final minutes = exercise.time ~/ 60;
+      final seconds = exercise.time % 60;
+
+      if (minutes > 0) {
+        text += '$minutes minutes ';
+      }
+      if (seconds > 0) {
+        text += '$seconds seconds ';
+      }
+    }
+    text += exercise.name;
+
+    await _flutterTts.awaitSpeakCompletion(true);
+    await _flutterTts.speak(text);
   }
 }

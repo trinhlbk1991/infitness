@@ -37,6 +37,7 @@ dependencies:
   connectivity: ^3.0.3
   package_info:
   fimber_io: ^0.6.0
+  flutter_tts: ^3.2.2
 
 dev_dependencies:
   flutter_test:
