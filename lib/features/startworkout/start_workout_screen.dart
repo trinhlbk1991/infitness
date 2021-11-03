@@ -88,8 +88,13 @@ class _StartWorkoutScreenState extends BaseState<StartWorkoutScreen>
           return scaffoldSafe(
             child: Column(
               children: [
-                appBar(context, state.workout.name,
-                    elevation: 0, onBackPress: () => _showConfirmExitDialog()),
+                appBar(
+                  context,
+                  state.workout.name,
+                  elevation: 0,
+                  radius: 0,
+                  onBackPress: () => _showConfirmExitDialog(),
+                ),
                 Expanded(
                   child: Stack(
                     children: [

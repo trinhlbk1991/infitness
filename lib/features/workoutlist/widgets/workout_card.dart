@@ -2,6 +2,7 @@ import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:infitness/model/set.dart';
 import 'package:infitness/model/workout.dart';
+import 'package:infitness/theme/app_theme.dart';
 import 'package:infitness/theme/colors.dart';
 import 'package:infitness/theme/dimensions.dart';
 import 'package:infitness/utils/date_time_utils.dart';
@@ -146,7 +147,7 @@ class WorkoutCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: index % 2 == 0
             ? secondaryColor(context).withOpacity(0.15)
-            : Colors.grey[100]!.withOpacity(0.9),
+            : isDarkMode(context) ? Colors.grey[500]!.withOpacity(0.15) : Colors.grey[100]!.withOpacity(0.9),
         borderRadius: BorderRadius.all(Radius.circular(8)),
       ),
       child: Stack(

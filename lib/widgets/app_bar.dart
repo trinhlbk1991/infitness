@@ -5,8 +5,13 @@ import 'package:infitness/theme/dimensions.dart';
 
 import 'app_text.dart';
 
-Widget appBar(BuildContext context, String title,
-    {double elevation = 4.0, Function? onBackPress}) {
+Widget appBar(
+  BuildContext context,
+  String title, {
+  double elevation = 4.0,
+  double radius = AppRadius.APP_BAR,
+  Function? onBackPress,
+}) {
   return AppBar(
     elevation: elevation,
     title: Container(
@@ -30,7 +35,7 @@ Widget appBar(BuildContext context, String title,
     ),
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.vertical(
-        bottom: Radius.circular(AppRadius.APP_BAR),
+        bottom: Radius.circular(radius),
       ),
     ),
   );

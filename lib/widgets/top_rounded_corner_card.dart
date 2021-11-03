@@ -12,7 +12,7 @@ class TopRoundedCornerCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Theme.of(context).canvasColor,
+        color: Theme.of(context).cardColor,
         borderRadius: BorderRadius.only(
           topLeft: const Radius.circular(AppRadius.BOTTOM_SHEET),
           topRight: const Radius.circular(AppRadius.BOTTOM_SHEET),

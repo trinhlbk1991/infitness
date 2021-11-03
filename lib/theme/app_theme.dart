@@ -13,6 +13,7 @@ class AppTheme {
           secondary: AppColors.SECONDARY,
           secondaryVariant: AppColors.SECONDARY_VARIANT,
           brightness: Brightness.dark,
+          surface: AppColors.DARK_PRIMARY,
         ),
         toggleableActiveColor: AppColors.SECONDARY,
         indicatorColor: AppColors.SECONDARY,

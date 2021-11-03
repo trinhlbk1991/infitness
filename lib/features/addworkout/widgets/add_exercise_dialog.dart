@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:group_button/group_button.dart';
 import 'package:infitness/model/exercise.dart';
+import 'package:infitness/theme/app_theme.dart';
 import 'package:infitness/theme/colors.dart';
 import 'package:infitness/theme/dimensions.dart';
 import 'package:infitness/theme/text_styles.dart';
@@ -247,8 +248,11 @@ _btnCancel(BuildContext context) => Expanded(
 NumberSelectionTheme numberPickerTheme(BuildContext context) =>
     NumberSelectionTheme(
       draggableCircleColor: secondaryColor(context),
-      iconsColor: secondaryColorVariant(context),
+      iconsColor: isDarkMode(context)
+          ? secondaryColorLight(context)
+          : secondaryColorVariant(context),
       numberColor: Colors.white,
-      backgroundColor: Colors.grey[300],
+      backgroundColor:
+          isDarkMode(context) ? Colors.grey[600] : Colors.grey[300],
       outOfConstraintsColor: Colors.red[700],
     );
