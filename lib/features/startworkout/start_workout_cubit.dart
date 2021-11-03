@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:infitness/features/startworkout/widgets/exercise_timer.dart';
 import 'package:infitness/model/workout.dart';
+import 'package:infitness/utils/log.dart';
 
 import 'start_workout_state.dart';
 
@@ -8,7 +9,10 @@ class StartWorkoutCubit extends Cubit<StartWorkoutState> {
   StartWorkoutCubit() : super(StartWorkoutState(workout: Workout()));
 
   void init(Workout workout) {
-    emit(StartWorkoutState_Init(workout));
+    if (state.workout.id.isEmpty) {
+      // Only emit init state on the first time, skip the rest!
+      emit(StartWorkoutState_Init(workout));
+    }
   }
 
   void startExercise() {

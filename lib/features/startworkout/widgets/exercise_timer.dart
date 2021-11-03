@@ -27,6 +27,7 @@ Widget exerciseTimer(
   required Function(Exercise) onPreviousTapped,
   required Function(Exercise) onFinishTapped,
   required Function(Exercise) onTimerFinished,
+  required Function(int, int) onValueChanged,
 }) {
   return SizedBox(
     height: height,
@@ -44,6 +45,7 @@ Widget exerciseTimer(
                         exercise,
                         timerController,
                         onTimerFinished,
+                        onValueChanged,
                       )
                     : _indeterminateProgress(context, exercise),
               ),
@@ -191,6 +193,7 @@ Widget _timer(
   Exercise exercise,
   TimerController timerController,
   Function(Exercise) onTimerFinished,
+  Function(int, int) onValueChanged,
 ) {
   return Padding(
     padding: EdgeInsets.all(_PADDING),
@@ -208,7 +211,8 @@ Widget _timer(
       backgroundColor: secondaryColor(context).withOpacity(0.1),
       strokeWidth: 20,
       onEnd: () => onTimerFinished(exercise),
-      valueListener: (value) {},
+      valueListener: (value) => onValueChanged(
+          value.inMilliseconds, timerController.duration?.inMilliseconds ?? 0),
     ),
   );
 }

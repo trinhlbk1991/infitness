@@ -38,6 +38,7 @@ dependencies:
   package_info:
   fimber_io: ^0.6.0
   flutter_tts: ^3.2.2
+  assets_audio_player: ^3.0.3+1
 
 dev_dependencies:
   flutter_test:

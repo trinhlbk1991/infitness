@@ -1,5 +1,7 @@
+import 'dart:async';
 import 'dart:io';
 
+import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -10,7 +12,6 @@ import 'package:infitness/features/startworkout/start_workout_cubit.dart';
 import 'package:infitness/features/startworkout/start_workout_state.dart';
 import 'package:infitness/model/exercise.dart';
 import 'package:infitness/model/workout.dart';
-import 'package:infitness/utils/date_time_utils.dart';
 import 'package:infitness/utils/log.dart';
 import 'package:infitness/utils/screen_size_utils.dart';
 import 'package:infitness/widgets/alert_bottom_sheet.dart';
@@ -37,30 +38,38 @@ class _StartWorkoutScreenState extends BaseState<StartWorkoutScreen>
   final _listViewKey = GlobalKey<AnimatedListState>();
 
   late FlutterTts _flutterTts;
-  String? language;
-  String? engine;
+  final _assetsAudioPlayer = AssetsAudioPlayer();
+
+  StreamSubscription? _subscription;
 
   @override
   void initState() {
     super.initState();
     _timerController = TimerController(this);
     _initTts();
+    _assetsAudioPlayer.open(Audio("assets/countdown.wav"), autoStart: false);
   }
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     _cubit = BlocProvider.of(context);
-    _cubit.stream.listen((event) {
-      _onStateChanged(context, event);
-    });
+
+    if (_subscription == null) {
+      _subscription = _cubit.stream.listen((event) {
+        _onStateChanged(context, event);
+      });
+    }
+
     _cubit.init(widget.workout);
   }
 
   @override
   void dispose() {
     _flutterTts.stop();
+    _assetsAudioPlayer.stop();
     _timerController.dispose();
+    _subscription?.cancel();
     _cubit.close();
     super.dispose();
   }
@@ -93,45 +102,45 @@ class _StartWorkoutScreenState extends BaseState<StartWorkoutScreen>
                           alignment: Alignment.bottomCenter,
                         ),
                       ),
-                      exerciseTimer(
-                        context,
-                        timerController: _timerController,
-                        exercise: state.getCurrentExercise(),
-                        state: state.timerState,
-                        canForward: state.canForward(),
-                        canBackward: state.canBackward(),
-                        height: screenHeight * 3 / 5,
-                        onStartTapped: () {
-                          _cubit.startExercise();
-                          if (_timerController.duration != Duration.zero) {
-                            _timerController.start();
-                          }
-                          _speakExercise(state.getCurrentExercise());
-                        },
-                        onPauseTapped: () {
-                          _cubit.pauseExercise();
-                          _timerController.pause();
-                        },
-                        onResumeTapped: () {
-                          _cubit.resumeExercise();
-                          if (_timerController.duration != Duration.zero) {
-                            _timerController.start();
-                          }
-                        },
-                        onNextTapped: (exercise) {
-                          _cubit.nextExercise();
-                        },
-                        onPreviousTapped: (exercise) {
-                          _cubit.previousExercise();
-                        },
-                        onFinishTapped: (exercise) {
-                          _timerController.pause();
-                          _showFinishDialog();
-                        },
-                        onTimerFinished: (exercise) {
-                          _cubit.nextExercise();
-                        },
-                      ),
+                      exerciseTimer(context,
+                          timerController: _timerController,
+                          exercise: state.getCurrentExercise(),
+                          state: state.timerState,
+                          canForward: state.canForward(),
+                          canBackward: state.canBackward(),
+                          height: screenHeight * 3 / 5, onStartTapped: () {
+                        _cubit.startExercise();
+                        if (_timerController.duration != Duration.zero) {
+                          _timerController.start();
+                        }
+                        _speakExercise(state.getCurrentExercise());
+                      }, onPauseTapped: () {
+                        _cubit.pauseExercise();
+                        _timerController.pause();
+                        if (_assetsAudioPlayer.isPlaying.value) {
+                          _assetsAudioPlayer.pause();
+                        }
+                      }, onResumeTapped: () {
+                        _cubit.resumeExercise();
+                        if (_timerController.duration != Duration.zero) {
+                          _timerController.start();
+                        }
+                      }, onNextTapped: (exercise) {
+                        Log.i('KAI', 'NEXT');
+                        _cubit.nextExercise();
+                      }, onPreviousTapped: (exercise) {
+                        _cubit.previousExercise();
+                      }, onFinishTapped: (exercise) {
+                        _timerController.pause();
+                        _showFinishDialog();
+                      }, onTimerFinished: (exercise) {
+                        _cubit.nextExercise();
+                      }, onValueChanged: (progress, max) {
+                        if (max - progress <= 5000 &&
+                            !_assetsAudioPlayer.isPlaying.value) {
+                          _assetsAudioPlayer.play();
+                        }
+                      }),
                     ],
                   ),
                 )
@@ -172,6 +181,9 @@ class _StartWorkoutScreenState extends BaseState<StartWorkoutScreen>
         _timerController.pause();
       }
       _speakExercise(exercise);
+      if (_assetsAudioPlayer.isPlaying.value) {
+        _assetsAudioPlayer.stop();
+      }
     } else if (state is StartWorkoutState_Backward) {
       _addTopExercise();
       if (exercise.time > 0) {
@@ -179,6 +191,9 @@ class _StartWorkoutScreenState extends BaseState<StartWorkoutScreen>
         _timerController.restart();
       } else {
         _timerController.pause();
+      }
+      if (_assetsAudioPlayer.isPlaying.value) {
+        _assetsAudioPlayer.stop();
       }
     } else if (state is StartWorkoutState_Finished) {
       _showFinishDialog();
