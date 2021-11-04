@@ -41,3 +41,7 @@ class Exercise {
     return 'Exercise{name: $name, time: $time, rep: $rep, index: $index}';
   }
 }
+
+class Rest extends Exercise {
+  Rest(int time) : super(name: 'Rest', time: time);
+}

@@ -170,8 +170,7 @@ class _StartWorkoutScreenState extends BaseState<StartWorkoutScreen>
   }
 
   void _onStateChanged(BuildContext context, StartWorkoutState state) {
-    final set = state.workout.sets[state.currentSet];
-    final exercise = set.exercises[state.currentExercise];
+    final exercise = state.exercises[state.exerciseIndex];
 
     if (state is StartWorkoutState_Init) {
       if (exercise.time > 0) {
