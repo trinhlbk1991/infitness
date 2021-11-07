@@ -76,9 +76,8 @@ Widget _exerciseCard(BuildContext context, int index, Exercise exercise) =>
 
 Widget _restCard(BuildContext context, int index, Exercise exercise) => card(
       borderWidth: 2,
-      color: isDarkMode(context)
-          ? Colors.green[700]!.withOpacity(0.5)
-          : Colors.green[100],
+      color: Theme.of(context).canvasColor,
+      borderColor: secondaryColor(context).withOpacity(0.7),
       margin: EdgeInsets.only(
         left: Spacing.NORMAL,
         right: Spacing.NORMAL,

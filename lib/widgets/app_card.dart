@@ -9,6 +9,7 @@ Widget card({
   Color? borderColor,
   double? borderWidth,
   EdgeInsets? padding,
+  double? elevation,
 }) {
   return Card(
     semanticContainer: true,
@@ -21,7 +22,7 @@ Widget card({
           : BorderSide.none,
       borderRadius: BorderRadius.circular(AppRadius.CARD),
     ),
-    elevation: Spacing.ELEVATION,
+    elevation: elevation ?? Spacing.ELEVATION,
     child: Padding(
       padding: padding ?? const EdgeInsets.all(8.0),
       child: child,
