@@ -32,4 +32,8 @@ class WorkoutListCubit extends Cubit<WorkoutListState> {
     _workoutHive.delete(id);
     loadWorkouts();
   }
+
+  void reloadWorkoutReport() {
+    _homeCubit.reloadWorkoutReport();
+  }
 }

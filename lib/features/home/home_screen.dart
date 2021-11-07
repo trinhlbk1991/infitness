@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:infitness/base/base_state.dart';
 import 'package:infitness/features/home/home_cubit.dart';
+import 'package:infitness/features/report/workout_report_screen.dart';
+import 'package:infitness/features/report/workout_report_cubit.dart';
 import 'package:infitness/features/workoutlist/workout_list_cubit.dart';
 import 'package:infitness/features/workoutlist/workout_list_screen.dart';
 import 'package:infitness/navigation/infitness_navigator.dart';
@@ -46,7 +48,13 @@ class _HomeScreenState extends BaseState<HomeScreen> {
                   ),
                   child: WorkoutListScreen(),
                 ),
-                Container(child: Center(child: AppText('Report'))),
+                BlocProvider<WorkoutReportCubit>(
+                  create: (context) => WorkoutReportCubit(
+                    historyHive: RepositoryProvider.of(context),
+                    homeCubit: _cubit,
+                  ),
+                  child: WorkoutReportScreen(),
+                ),
                 Container(child: Center(child: AppText('Community'))),
                 Container(child: Center(child: AppText('Settings'))),
               ],

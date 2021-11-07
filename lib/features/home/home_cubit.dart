@@ -9,4 +9,8 @@ class HomeCubit extends Cubit<HomeState> {
   reloadWorkoutList() {
     emit(HomeState(HomeState.ACTION_RELOAD_WORKOUTS));
   }
+
+  reloadWorkoutReport() {
+    emit(HomeState(HomeState.ACTION_RELOAD_REPORT));
+  }
 }

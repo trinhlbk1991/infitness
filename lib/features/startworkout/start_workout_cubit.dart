@@ -1,11 +1,19 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:infitness/database/history_hive.dart';
 import 'package:infitness/features/startworkout/widgets/exercise_timer.dart';
+import 'package:infitness/model/history.dart';
 import 'package:infitness/model/workout.dart';
+import 'package:infitness/utils/date_time_utils.dart';
 
 import 'start_workout_state.dart';
 
 class StartWorkoutCubit extends Cubit<StartWorkoutState> {
-  StartWorkoutCubit() : super(StartWorkoutState(workout: Workout()));
+  HistoryHive _historyHive;
+
+  StartWorkoutCubit({
+    required HistoryHive historyHive,
+  })  : _historyHive = historyHive,
+        super(StartWorkoutState(workout: Workout()));
 
   void init(Workout workout) {
     if (state.workout.id.isEmpty) {
@@ -44,5 +52,13 @@ class StartWorkoutCubit extends Cubit<StartWorkoutState> {
       );
       emit(StartWorkoutState_Backward(newState));
     }
+  }
+
+  void saveWorkoutHistory() {
+    final history = History(
+      workout: state.workout,
+      date: DateTimeUtils.currentTimeUtc(),
+    );
+    _historyHive.save(history);
   }
 }

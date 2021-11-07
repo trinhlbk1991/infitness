@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:infitness/database/history_hive.dart';
 import 'package:infitness/database/settings_hive.dart';
 import 'package:infitness/database/workout_hive.dart';
 
@@ -11,6 +12,9 @@ class HiveModule {
     ),
     RepositoryProvider<WorkoutHive>(
       create: (context) => WorkoutHive(),
+    ),
+    RepositoryProvider<HistoryHive>(
+      create: (context) => HistoryHive(),
     ),
   ];
 }

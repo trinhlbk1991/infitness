@@ -13,7 +13,7 @@ class StartWorkoutState extends Equatable {
 
   bool isFirstExercise() => exerciseIndex == 0;
 
-  bool canForward() => exerciseIndex < exercises.length;
+  bool canForward() => exerciseIndex + 1 < exercises.length;
 
   bool canBackward() => exerciseIndex > 0;
 

@@ -23,13 +23,15 @@ class WorkoutAdapter extends TypeAdapter<Workout> {
       isDeleted: fields[3] as bool,
       createdAt: fields[4] as int,
       updatedAt: fields[5] as int,
+      restSet: fields[7] as int,
+      restExercise: fields[8] as int,
     );
   }
 
   @override
   void write(BinaryWriter writer, Workout obj) {
     writer
-      ..writeByte(6)
+      ..writeByte(8)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -41,7 +43,11 @@ class WorkoutAdapter extends TypeAdapter<Workout> {
       ..writeByte(4)
       ..write(obj.createdAt)
       ..writeByte(5)
-      ..write(obj.updatedAt);
+      ..write(obj.updatedAt)
+      ..writeByte(7)
+      ..write(obj.restSet)
+      ..writeByte(8)
+      ..write(obj.restExercise);
   }
 
   @override

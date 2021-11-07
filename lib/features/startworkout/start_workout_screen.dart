@@ -231,6 +231,7 @@ class _StartWorkoutScreenState extends BaseState<StartWorkoutScreen>
       positiveText: 'Finish',
       positiveStyle: PositiveStyle.primary,
       positiveClicked: () {
+        _cubit.saveWorkoutHistory();
         Navigator.of(context).pop();
       },
       negativeText: null,

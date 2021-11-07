@@ -3,6 +3,7 @@ import 'package:uuid/uuid.dart';
 
 class HomeState extends Equatable {
   static const String ACTION_RELOAD_WORKOUTS = 'RELOAD_WORKOUTS';
+  static const String ACTION_RELOAD_REPORT = 'RELOAD_REPORT';
 
   final String action;
 

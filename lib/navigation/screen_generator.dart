@@ -29,7 +29,9 @@ addWorkoutScreen(BuildContext context, RouteSettings settings) {
 startWorkoutScreen(BuildContext context, RouteSettings settings) {
   final workout = settings.getObjectArg(InfitnessNavigator.ARG_WORKOUT);
   return BlocProvider(
-    create: (context) => StartWorkoutCubit(),
+    create: (context) => StartWorkoutCubit(
+      historyHive: RepositoryProvider.of(context),
+    ),
     child: StartWorkoutScreen(workout: workout),
   );
 }

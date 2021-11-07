@@ -11,11 +11,13 @@ Widget appBar(
   double elevation = 4.0,
   double radius = AppRadius.APP_BAR,
   Function? onBackPress,
+  bool showBackIcon = true,
 }) {
   return AppBar(
     elevation: elevation,
     title: Container(
       width: double.infinity,
+      margin: EdgeInsets.only(left: showBackIcon ? 0 : Spacing.NORMAL),
       child: AppText(
         title,
         style: Theme.of(context).textTheme.headline6?.copyWith(
@@ -24,15 +26,18 @@ Widget appBar(
       ),
     ),
     titleSpacing: Spacing.SUPER_TINY,
-    leading: IconButton(
-      iconSize: 20,
-      icon: Icon(
-        Icons.arrow_back_ios_rounded,
-        color: secondaryColor(context),
-      ),
-      onPressed: () =>
-          onBackPress != null ? onBackPress() : Navigator.of(context).pop(),
-    ),
+    leading: showBackIcon
+        ? IconButton(
+            iconSize: 20,
+            icon: Icon(
+              Icons.arrow_back_ios_rounded,
+              color: secondaryColor(context),
+            ),
+            onPressed: () => onBackPress != null
+                ? onBackPress()
+                : Navigator.of(context).pop(),
+          )
+        : null,
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.vertical(
         bottom: Radius.circular(radius),
