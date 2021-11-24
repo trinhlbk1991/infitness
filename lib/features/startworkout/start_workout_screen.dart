@@ -17,6 +17,7 @@ import 'package:infitness/utils/screen_size_utils.dart';
 import 'package:infitness/widgets/alert_bottom_sheet.dart';
 import 'package:infitness/widgets/app_bar.dart';
 import 'package:infitness/widgets/simple_timer.dart';
+import 'package:wakelock/wakelock.dart';
 
 import 'widgets/exercise_timer.dart';
 import 'widgets/remaining_exercises.dart';
@@ -48,6 +49,10 @@ class _StartWorkoutScreenState extends BaseState<StartWorkoutScreen>
     _timerController = TimerController(this);
     _initTts();
     _assetsAudioPlayer.open(Audio("assets/countdown.wav"), autoStart: false);
+
+    setState(() {
+      Wakelock.enable();
+    });
   }
 
   @override
@@ -71,6 +76,11 @@ class _StartWorkoutScreenState extends BaseState<StartWorkoutScreen>
     _timerController.dispose();
     _subscription?.cancel();
     _cubit.close();
+
+    setState(() {
+      Wakelock.disable();
+    });
+
     super.dispose();
   }
 
