@@ -12,10 +12,13 @@ import 'package:infitness/features/startworkout/start_workout_cubit.dart';
 import 'package:infitness/features/startworkout/start_workout_state.dart';
 import 'package:infitness/model/exercise.dart';
 import 'package:infitness/model/workout.dart';
+import 'package:infitness/theme/dimensions.dart';
 import 'package:infitness/utils/log.dart';
 import 'package:infitness/utils/screen_size_utils.dart';
+import 'package:infitness/utils/view_utils.dart';
 import 'package:infitness/widgets/alert_bottom_sheet.dart';
 import 'package:infitness/widgets/app_bar.dart';
+import 'package:infitness/widgets/app_text.dart';
 import 'package:infitness/widgets/simple_timer.dart';
 import 'package:wakelock/wakelock.dart';
 
@@ -111,8 +114,17 @@ class _StartWorkoutScreenState extends BaseState<StartWorkoutScreen>
                       Positioned.fill(
                         child: Align(
                           child: SizedBox(
-                            height: screenHeight * 1.5 / 5,
-                            child: remainingExercises(_listViewKey, state),
+                            height: screenHeight * 1.65 / 5,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                paddingOnly(
+                                  child: AppText('Next Exercises:'),
+                                  left: Spacing.NORMAL,
+                                ),
+                                remainingExercises(_listViewKey, state)
+                              ],
+                            ),
                           ),
                           alignment: Alignment.bottomCenter,
                         ),
@@ -123,7 +135,7 @@ class _StartWorkoutScreenState extends BaseState<StartWorkoutScreen>
                           state: state.timerState,
                           canForward: state.canForward(),
                           canBackward: state.canBackward(),
-                          height: screenHeight * 3 / 5, onStartTapped: () {
+                          height: screenHeight * 2.8 / 5, onStartTapped: () {
                         _cubit.startExercise();
                         if (_timerController.duration != Duration.zero) {
                           _timerController.start();
@@ -171,7 +183,7 @@ class _StartWorkoutScreenState extends BaseState<StartWorkoutScreen>
     _listViewKey.currentState?.removeItem(
       0,
       (context, animation) =>
-          animateExerciseCard(context, 0, exercise, animation),
+          animateExerciseCard(context, 0, exercise, false, animation),
     );
   }
 

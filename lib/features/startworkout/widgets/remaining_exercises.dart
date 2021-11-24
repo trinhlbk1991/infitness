@@ -13,15 +13,23 @@ Widget remainingExercises(Key? key, StartWorkoutState state) {
   final remainingExercises = state.getRemainingExercises();
   return AnimatedList(
     key: key,
-    padding: EdgeInsets.only(bottom: Spacing.NORMAL, top: Spacing.LARGE_2),
     itemBuilder: (context, index, animation) => animateExerciseCard(
-        context, index, remainingExercises[index], animation),
+        context,
+        index,
+        remainingExercises[index],
+        index == remainingExercises.length - 1,
+        animation),
     initialItemCount: remainingExercises.length,
   );
 }
 
 Widget animateExerciseCard(
-    BuildContext context, int index, Exercise exercise, animation) {
+  BuildContext context,
+  int index,
+  Exercise exercise,
+  bool isLastExercise,
+  animation,
+) {
   return SlideTransition(
     position: Tween<Offset>(
       begin: const Offset(-1, 0),
@@ -29,17 +37,18 @@ Widget animateExerciseCard(
     ).animate(animation),
     child: exercise is Rest
         ? _restCard(context, index, exercise)
-        : _exerciseCard(context, index, exercise),
+        : _exerciseCard(context, index, exercise, isLastExercise),
   );
 }
 
-Widget _exerciseCard(BuildContext context, int index, Exercise exercise) =>
+Widget _exerciseCard(BuildContext context, int index, Exercise exercise, bool isLastExercise) =>
     card(
       borderWidth: 2,
       margin: EdgeInsets.only(
         left: Spacing.NORMAL,
         right: Spacing.NORMAL,
         top: Spacing.NORMAL,
+        bottom: isLastExercise ? Spacing.NORMAL : 0,
       ),
       padding: EdgeInsets.only(left: Spacing.NORMAL),
       child: Row(

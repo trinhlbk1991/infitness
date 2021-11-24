@@ -33,7 +33,10 @@ class StartWorkoutState extends Equatable {
             exercises.add(Rest(workout.restExercise));
           }
         }
-        if (workout.restSet > 0) {
+
+        final isLastSetOfWorkout = repeat == set.repeat - 1 &&
+            workout.sets.indexOf(set) == set.exercises.length - 1;
+        if (workout.restSet > 0 && !isLastSetOfWorkout) {
           exercises.add(Rest(workout.restSet));
         }
       }
