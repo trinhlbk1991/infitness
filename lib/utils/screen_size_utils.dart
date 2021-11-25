@@ -9,6 +9,9 @@ class ScreenSizeUtils {
   static double height(BuildContext context) =>
       MediaQuery.of(context).size.height;
 
+  static double safeHeight(BuildContext context) =>
+      height(context) - paddingTop(context) - paddingBottom(context);
+
   static double paddingTop(BuildContext context) =>
       MediaQuery.of(context).padding.top;
 

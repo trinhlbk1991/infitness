@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:infitness/model/exercise.dart';
-import 'package:infitness/theme/app_theme.dart';
 import 'package:infitness/theme/colors.dart';
 import 'package:infitness/theme/dimensions.dart';
 import 'package:infitness/utils/date_time_utils.dart';
@@ -14,11 +13,11 @@ Widget remainingExercises(Key? key, StartWorkoutState state) {
   return AnimatedList(
     key: key,
     itemBuilder: (context, index, animation) => animateExerciseCard(
-        context,
-        index,
-        remainingExercises[index],
-        index == remainingExercises.length - 1,
-        animation),
+      context,
+      index,
+      remainingExercises[index],
+      animation,
+    ),
     initialItemCount: remainingExercises.length,
   );
 }
@@ -27,7 +26,6 @@ Widget animateExerciseCard(
   BuildContext context,
   int index,
   Exercise exercise,
-  bool isLastExercise,
   animation,
 ) {
   return SlideTransition(
@@ -37,18 +35,17 @@ Widget animateExerciseCard(
     ).animate(animation),
     child: exercise is Rest
         ? _restCard(context, index, exercise)
-        : _exerciseCard(context, index, exercise, isLastExercise),
+        : _exerciseCard(context, index, exercise),
   );
 }
 
-Widget _exerciseCard(BuildContext context, int index, Exercise exercise, bool isLastExercise) =>
+Widget _exerciseCard(BuildContext context, int index, Exercise exercise) =>
     card(
       borderWidth: 2,
       margin: EdgeInsets.only(
         left: Spacing.NORMAL,
         right: Spacing.NORMAL,
-        top: Spacing.NORMAL,
-        bottom: isLastExercise ? Spacing.NORMAL : 0,
+        bottom: Spacing.NORMAL,
       ),
       padding: EdgeInsets.only(left: Spacing.NORMAL),
       child: Row(
@@ -90,7 +87,7 @@ Widget _restCard(BuildContext context, int index, Exercise exercise) => card(
       margin: EdgeInsets.only(
         left: Spacing.NORMAL,
         right: Spacing.NORMAL,
-        top: Spacing.NORMAL,
+        bottom: Spacing.NORMAL,
       ),
       padding: EdgeInsets.only(left: Spacing.NORMAL),
       child: Row(

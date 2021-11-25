@@ -10,8 +10,6 @@ import 'package:infitness/widgets/space.dart';
 
 enum TimerState { IDLE, PLAYING, PAUSED }
 
-double _PADDING = 48.0;
-
 Widget exerciseTimer(
   BuildContext context, {
   required TimerController timerController,
@@ -49,11 +47,11 @@ Widget exerciseTimer(
                       )
                     : _indeterminateProgress(context, exercise),
               ),
+              Space(),
               AppText(
                 exercise.name,
                 style: Theme.of(context).textTheme.headline4,
               ),
-              Space(),
               _navigationButtons(
                 context,
                 exercise,
@@ -89,7 +87,7 @@ Widget _indeterminateProgress(BuildContext context, Exercise exercise) {
       AspectRatio(
         aspectRatio: 1,
         child: Container(
-          padding: EdgeInsets.all(_PADDING),
+          padding: EdgeInsets.all(Spacing.NORMAL),
           child: CircularProgressIndicator(
             valueColor: AlwaysStoppedAnimation<Color>(secondaryColor(context)),
             backgroundColor: secondaryColor(context).withOpacity(0.1),
@@ -195,8 +193,8 @@ Widget _timer(
   Function(Exercise) onTimerFinished,
   Function(int, int) onValueChanged,
 ) {
-  return Padding(
-    padding: EdgeInsets.all(_PADDING),
+  return Container(
+    margin: EdgeInsets.all(Spacing.NORMAL),
     child: SimpleTimer(
       duration: Duration(seconds: exercise.time),
       controller: timerController,

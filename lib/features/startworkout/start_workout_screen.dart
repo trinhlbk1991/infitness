@@ -20,6 +20,7 @@ import 'package:infitness/widgets/alert_bottom_sheet.dart';
 import 'package:infitness/widgets/app_bar.dart';
 import 'package:infitness/widgets/app_text.dart';
 import 'package:infitness/widgets/simple_timer.dart';
+import 'package:infitness/widgets/space.dart';
 import 'package:wakelock/wakelock.dart';
 
 import 'widgets/exercise_timer.dart';
@@ -89,7 +90,7 @@ class _StartWorkoutScreenState extends BaseState<StartWorkoutScreen>
 
   @override
   Widget build(BuildContext context) {
-    final screenHeight = ScreenSizeUtils.height(context);
+    final screenHeight = ScreenSizeUtils.safeHeight(context);
 
     return WillPopScope(
       onWillPop: () async {
@@ -112,21 +113,22 @@ class _StartWorkoutScreenState extends BaseState<StartWorkoutScreen>
                   child: Stack(
                     children: [
                       Positioned.fill(
-                        child: Align(
-                          child: SizedBox(
-                            height: screenHeight * 1.65 / 5,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                paddingOnly(
-                                  child: AppText('Next Exercises:'),
-                                  left: Spacing.NORMAL,
-                                ),
-                                remainingExercises(_listViewKey, state)
-                              ],
-                            ),
+                        child: Container(
+                          padding:
+                              EdgeInsets.only(top: screenHeight * 2.75 / 5),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              paddingOnly(
+                                child: AppText('Next Exercises:'),
+                                left: Spacing.NORMAL,
+                              ),
+                              Space(),
+                              Expanded(
+                                child: remainingExercises(_listViewKey, state),
+                              )
+                            ],
                           ),
-                          alignment: Alignment.bottomCenter,
                         ),
                       ),
                       exerciseTimer(context,
@@ -183,7 +185,7 @@ class _StartWorkoutScreenState extends BaseState<StartWorkoutScreen>
     _listViewKey.currentState?.removeItem(
       0,
       (context, animation) =>
-          animateExerciseCard(context, 0, exercise, false, animation),
+          animateExerciseCard(context, 0, exercise, animation),
     );
   }
 
