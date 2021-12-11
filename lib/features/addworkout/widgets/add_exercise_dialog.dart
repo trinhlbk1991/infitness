@@ -5,8 +5,6 @@ import 'package:infitness/theme/app_theme.dart';
 import 'package:infitness/theme/colors.dart';
 import 'package:infitness/theme/dimensions.dart';
 import 'package:infitness/theme/text_styles.dart';
-import 'package:infitness/utils/log.dart';
-import 'package:infitness/utils/view_utils.dart';
 import 'package:infitness/widgets/app_text.dart';
 import 'package:infitness/widgets/buttons/app_buttons.dart';
 import 'package:infitness/widgets/edit_text.dart';
@@ -19,16 +17,27 @@ void showAddExerciseDialog(
   Exercise? exercise,
   required ValueChanged<Exercise> onSave,
 }) {
-  final controller = TextEditingController();
+  final nameTextController = TextEditingController();
+  final repTextController = TextEditingController();
+  final repTimeTextController = TextEditingController();
+  final minuteTextController = TextEditingController();
+  final secondTextController = TextEditingController();
+
   final formKey = GlobalKey<FormState>();
   var type = (exercise != null && exercise.rep > 0) ? REPS : TIMER;
-  var minutes = exercise != null ? exercise.time ~/ 60 : 0;
-  var seconds = exercise != null ? exercise.time % 60 : 30;
-  var reps = exercise != null ? exercise.rep : 15;
+  final minutes = exercise != null ? exercise.time ~/ 60 : 0;
+  final seconds = exercise != null ? exercise.time % 60 : 30;
+  final reps = exercise != null ? exercise.rep : 5;
+  final repTime = exercise != null ? exercise.repTime : 5;
 
   if (exercise != null) {
-    controller.text = exercise.name;
+    nameTextController.text = exercise.name;
   }
+
+  repTextController.text = '$reps';
+  repTimeTextController.text = '$repTime';
+  minuteTextController.text = '$minutes';
+  secondTextController.text = '$seconds';
 
   showModalBottomSheet(
     context: context,
@@ -57,7 +66,7 @@ void showAddExerciseDialog(
                         children: [
                           headline5Text(context, 'Add Exercise'),
                           Space(),
-                          _editTextName(controller),
+                          _editTextName(nameTextController),
                           Space(),
                           _typeSwitch(
                             context,
@@ -69,15 +78,12 @@ void showAddExerciseDialog(
                           type == TIMER
                               ? _timerPicker(
                                   context,
-                                  minutes: minutes,
-                                  seconds: seconds,
-                                  onMinutesChanged: (value) => minutes = value,
-                                  onSecondsChanged: (value) => seconds = value,
+                                  minuteTextController: minuteTextController,
+                                  secondTextController: secondTextController,
                                 )
                               : _repPicker(
                                   context,
-                                  reps: reps,
-                                  onRepsChanged: (value) => reps = value,
+                                  repsTextController: repTextController,
                                 ),
                           Space(size: Spacing.LARGE),
                           Row(
@@ -86,12 +92,22 @@ void showAddExerciseDialog(
                               Space(),
                               _btnSave(context, () {
                                 if (formKey.currentState!.validate()) {
+                                  final min =
+                                      int.tryParse(minuteTextController.text) ??
+                                          0;
+                                  final sec =
+                                      int.tryParse(secondTextController.text) ??
+                                          0;
+                                  final reps =
+                                      int.tryParse(repTextController.text) ?? 0;
+                                  final repTime = int.tryParse(
+                                          repTimeTextController.text) ??
+                                      0;
                                   final exercise = Exercise(
-                                    name: controller.text,
-                                    time: type == TIMER
-                                        ? minutes * 60 + seconds
-                                        : 0,
+                                    name: nameTextController.text,
+                                    time: type == TIMER ? min * 60 + sec : 0,
                                     rep: type == REPS ? reps : 0,
+                                    repTime: type == REPS ? repTime : 0,
                                   );
                                   onSave(exercise);
                                   FocusScope.of(context).unfocus();
@@ -143,43 +159,42 @@ Widget _typeSwitch(
 
 Widget _timerPicker(
   BuildContext context, {
-  required int minutes,
-  required int seconds,
-  required ValueChanged<int> onMinutesChanged,
-  required ValueChanged<int> onSecondsChanged,
+  required TextEditingController minuteTextController,
+  required TextEditingController secondTextController,
 }) =>
     Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Column(
           children: [
             SizedBox(
-              width: 120,
-              child: NumberPicker(
-                theme: numberPickerTheme(context),
-                minValue: 0,
-                maxValue: 60,
-                initialValue: minutes,
-                direction: Axis.horizontal,
-                onChanged: (value) => onMinutesChanged(value),
+              width: 80,
+              child: EditText(
+                hint: '0',
+                controller: minuteTextController,
+                textAlign: TextAlign.center,
+                keyboardType: TextInputType.number,
               ),
             ),
             Space(size: Spacing.SMALL),
             AppText('Minutes'),
           ],
         ),
+        Space(),
+        Column(
+          children: [AppText(':'), AppText('')],
+        ),
+        Space(),
         Column(
           children: [
             SizedBox(
-              width: 120,
-              child: NumberPicker(
-                theme: numberPickerTheme(context),
-                initialValue: seconds,
-                minValue: 0,
-                maxValue: 60,
-                step: 5,
-                direction: Axis.horizontal,
-                onChanged: (value) => onSecondsChanged(value),
+              width: 80,
+              child: EditText(
+                hint: '0',
+                controller: secondTextController,
+                textAlign: TextAlign.center,
+                keyboardType: TextInputType.number,
               ),
             ),
             Space(size: Spacing.SMALL),
@@ -191,20 +206,47 @@ Widget _timerPicker(
 
 Widget _repPicker(
   BuildContext context, {
-  required int reps,
-  required ValueChanged<int> onRepsChanged,
+  required TextEditingController repsTextController,
 }) =>
-    SizedBox(
-      width: 120,
-      height: 79,
-      child: NumberPicker(
-        theme: numberPickerTheme(context),
-        minValue: 1,
-        initialValue: reps,
-        maxValue: 10000,
-        direction: Axis.horizontal,
-        onChanged: (value) => onRepsChanged(value),
-      ),
+    Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Column(
+          children: [
+            SizedBox(
+              width: 80,
+              child: EditText(
+                hint: '0',
+                controller: repsTextController,
+                textAlign: TextAlign.center,
+              ),
+            ),
+            Space(size: Spacing.SMALL),
+            AppText('Reps'),
+          ],
+        ),
+        Space(),
+        Column(
+          children: [AppText('x'), AppText('')],
+        ),
+        Space(),
+        Column(
+          children: [
+            SizedBox(
+              width: 80,
+              child: EditText(
+                hint: '0',
+                controller: repsTextController,
+                textAlign: TextAlign.center,
+                keyboardType: TextInputType.number,
+              ),
+            ),
+            Space(size: Spacing.SMALL),
+            AppText('Seconds'),
+          ],
+        )
+      ],
     );
 
 const String TIMER = 'Timer';

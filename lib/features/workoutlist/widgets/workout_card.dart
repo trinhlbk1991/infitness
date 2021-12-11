@@ -205,11 +205,8 @@ String _workoutEstTime(Workout workout) {
     final setTime = set.exercises.fold(
         0,
         (previousValue, element) =>
-            (previousValue as int) +
-            element.time +
-            element.rep * 5 +
-            workout.restExercise);
-    time += (setTime + workout.restSet) * set.repeat;
+            (previousValue as int) + element.time + element.rep * 5);
+    time += setTime * set.repeat;
   });
   return 'Duration: ${DateTimeUtils.formatSeconds(time)}';
 }

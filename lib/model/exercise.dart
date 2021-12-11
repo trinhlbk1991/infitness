@@ -13,6 +13,9 @@ class Exercise {
   @HiveField(2)
   final int rep;
 
+  @HiveField(4)
+  final int repTime;
+
   @HiveField(3)
   final int index;
 
@@ -20,6 +23,7 @@ class Exercise {
     required this.name,
     this.time = 0,
     this.rep = 0,
+    this.repTime = 0,
     this.index = 0,
   });
 
@@ -27,18 +31,20 @@ class Exercise {
     String? name,
     int? time,
     int? rep,
+    int? repTime,
     int? index,
   }) =>
       Exercise(
         name: name ?? this.name,
         time: time ?? this.time,
         rep: rep ?? this.rep,
+        repTime: repTime ?? this.repTime,
         index: index ?? this.index,
       );
 
   @override
   String toString() {
-    return 'Exercise{name: $name, time: $time, rep: $rep, index: $index}';
+    return 'Exercise{name: $name, time: $time, rep: $rep, repTime: $repTime, index: $index}';
   }
 }
 

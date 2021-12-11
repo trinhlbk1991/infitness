@@ -22,8 +22,6 @@ class AddWorkoutCubit extends Cubit<AddWorkoutState> {
       isAddMode: workout == null,
       workoutId: workout?.id ?? Uuid().v1(),
       sets: workout?.sets ?? [Set()],
-      restSet: workout?.restSet ?? 60,
-      restExercise: workout?.restExercise ?? 30,
     ));
   }
 
@@ -87,8 +85,6 @@ class AddWorkoutCubit extends Cubit<AddWorkoutState> {
       id: state.workoutId ?? Uuid().v1(),
       name: name,
       sets: sets,
-      restSet: state.restSet,
-      restExercise: state.restExercise,
     );
     _workoutHive.save(workout);
 

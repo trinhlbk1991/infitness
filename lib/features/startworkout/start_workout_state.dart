@@ -2,7 +2,6 @@ import 'package:equatable/equatable.dart';
 import 'package:infitness/features/startworkout/widgets/exercise_timer.dart';
 import 'package:infitness/model/exercise.dart';
 import 'package:infitness/model/workout.dart';
-import 'package:infitness/utils/log.dart';
 
 class StartWorkoutState extends Equatable {
   final Workout workout;
@@ -29,16 +28,10 @@ class StartWorkoutState extends Equatable {
       for (int repeat = 0; repeat < set.repeat; repeat++) {
         for (int i = 0; i < set.exercises.length; i++) {
           exercises.add(set.exercises[i]);
-          if (workout.restExercise > 0 && i < set.exercises.length - 1) {
-            exercises.add(Rest(workout.restExercise));
-          }
         }
 
         final isLastSetOfWorkout = repeat == set.repeat - 1 &&
             workout.sets.indexOf(set) == set.exercises.length - 1;
-        if (workout.restSet > 0 && !isLastSetOfWorkout) {
-          exercises.add(Rest(workout.restSet));
-        }
       }
     });
   }

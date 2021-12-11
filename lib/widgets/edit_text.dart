@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:infitness/theme/app_theme.dart';
 import 'package:infitness/theme/colors.dart';
 import 'package:infitness/theme/dimensions.dart';
 
@@ -8,11 +7,13 @@ class EditText extends StatelessWidget {
   final String? hint;
   final FormFieldValidator<String>? validator;
   final TextInputType? keyboardType;
+  final TextInputAction? textInputAction;
   final TextEditingController? controller;
   final bool readOnly;
   final bool autoFocus;
   final GestureTapCallback? onTap;
   final String? initialValue;
+  final TextAlign textAlign;
 
   EditText({
     this.hint,
@@ -23,6 +24,8 @@ class EditText extends StatelessWidget {
     this.autoFocus = false,
     this.onTap,
     this.initialValue,
+    this.textAlign = TextAlign.start,
+    this.textInputAction,
   });
 
   @override
@@ -31,9 +34,11 @@ class EditText extends StatelessWidget {
       controller: controller,
       validator: validator,
       keyboardType: keyboardType,
+      textInputAction: textInputAction,
       initialValue: initialValue,
       enabled: !readOnly,
       autofocus: autoFocus,
+      textAlign: textAlign,
       textCapitalization: TextCapitalization.sentences,
       onTap: () {
         if (onTap != null) {

@@ -141,7 +141,9 @@ class SetCard extends StatelessWidget {
                       AppText(
                         exercise.time > 0
                             ? DateTimeUtils.formatSeconds(exercise.time)
-                            : '${exercise.rep} Reps',
+                            : (exercise.repTime == 0)
+                                ? '${exercise.rep} Reps'
+                                : '${exercise.rep} Reps x ${exercise.rep} Secs',
                         color: textColorSecondary(context),
                       ),
                     ],
