@@ -21,6 +21,7 @@ addWorkoutScreen(BuildContext context, RouteSettings settings) {
   return BlocProvider(
     create: (context) => AddWorkoutCubit(
       workoutHive: RepositoryProvider.of(context),
+      guideHive: RepositoryProvider.of(context),
     ),
     child: AddWorkoutScreen(workout: workout),
   );

@@ -9,6 +9,7 @@ class HiveUtils {
   HiveUtils._();
 
   static const String BOX_SETTINGS = 'settings';
+  static const String BOX_GUIDE = 'guide';
   static const String BOX_WORKOUT = 'workout';
   static const String BOX_HISTORY = 'history';
 
@@ -21,11 +22,14 @@ class HiveUtils {
     Hive.registerAdapter<History>(HistoryAdapter());
 
     await Hive.openBox(BOX_SETTINGS);
+    await Hive.openBox(BOX_GUIDE);
     await Hive.openBox<Workout>(BOX_WORKOUT);
     await Hive.openBox<History>(BOX_HISTORY);
   }
 
   static Box boxSettings() => Hive.box(BOX_SETTINGS);
+
+  static Box boxGuide() => Hive.box(BOX_GUIDE);
 
   static Box<Workout> boxWorkout() => Hive.box<Workout>(BOX_WORKOUT);
 

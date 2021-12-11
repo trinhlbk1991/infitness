@@ -26,6 +26,7 @@ dependencies:
   group_button: ^3.3.1
   simple_timer: ^2.0.0
   flutter_slidable:
+  fluttertoast: ^8.0.8
 
   equatable: ^2.0.3
   tuple: ^2.0.0

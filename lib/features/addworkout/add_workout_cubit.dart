@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:infitness/database/guide_hive.dart';
 import 'package:infitness/database/workout_hive.dart';
 import 'package:infitness/features/addworkout/add_workout_state.dart';
 import 'package:infitness/model/exercise.dart';
@@ -8,9 +9,13 @@ import 'package:uuid/uuid.dart';
 
 class AddWorkoutCubit extends Cubit<AddWorkoutState> {
   WorkoutHive _workoutHive;
+  GuideHive _guideHive;
 
-  AddWorkoutCubit({required WorkoutHive workoutHive})
-      : _workoutHive = workoutHive,
+  AddWorkoutCubit({
+    required WorkoutHive workoutHive,
+    required GuideHive guideHive,
+  })  : _workoutHive = workoutHive,
+        _guideHive = guideHive,
         super(AddWorkoutState());
 
   init(Workout? workout) {
@@ -18,11 +23,13 @@ class AddWorkoutCubit extends Cubit<AddWorkoutState> {
       return;
     }
 
-    emit(AddWorkoutState(
-      isAddMode: workout == null,
-      workoutId: workout?.id ?? Uuid().v1(),
-      sets: workout?.sets ?? [Set()],
-    ));
+    emit(
+      AddWorkoutState(
+        isAddMode: workout == null,
+        workoutId: workout?.id ?? Uuid().v1(),
+        sets: workout?.sets ?? [Set()],
+      ),
+    );
   }
 
   updateRepeat(int setIndex, int repeat) {
@@ -39,6 +46,11 @@ class AddWorkoutCubit extends Cubit<AddWorkoutState> {
     newSets.add(Set(index: newSets.length));
 
     emit(AddWorkoutState.fromState(state: state, sets: newSets));
+
+    if (_guideHive.guideDeleteSet()) {
+      emit(AddWorkout_ShowGuide(state));
+      _guideHive.setGuideDeleteSet(false);
+    }
   }
 
   deleteSet(Set set) {

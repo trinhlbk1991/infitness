@@ -77,8 +77,11 @@ class SetCard extends StatelessWidget {
             AppSlidableAction(
               onPressed: (context) => onDeleteSet(set),
               backgroundColor: Colors.red[800]!,
-              foregroundColor: Colors.white,
-              child: Icon(Icons.delete_outline_rounded, size: 48),
+              child: Icon(
+                Icons.delete_outline_rounded,
+                size: 48,
+                color: Colors.white,
+              ),
             )
           ],
         ),

@@ -13,7 +13,7 @@ class BaseBlocListener<B extends BlocBase<S>, S>
     required BlocWidgetListener<S> listener,
     BlocListenerCondition<S>? listenWhen,
     Widget? child,
-    this.showLog = false,
+    this.showLog = true,
   }) : super(
           key: key,
           child: child,

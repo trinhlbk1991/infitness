@@ -59,10 +59,10 @@ class _AddWorkoutScreenState extends BaseState<AddWorkoutScreen> {
   @override
   Widget build(BuildContext context) {
     return BaseBlocListener<AddWorkoutCubit, AddWorkoutState>(
-      showLog: false,
+      showLog: true,
       listener: _onStateChanged,
       child: BaseBlocBuilder<AddWorkoutCubit, AddWorkoutState>(
-        showLog: false,
+        showLog: true,
         builder: (context, state) {
           return scaffoldSafe(
             child: Column(
@@ -84,6 +84,8 @@ class _AddWorkoutScreenState extends BaseState<AddWorkoutScreen> {
   void _onStateChanged(BuildContext context, AddWorkoutState state) {
     if (state is AddWorkout_SaveSuccess) {
       Navigator.of(context).pop();
+    } else if (state is AddWorkout_ShowGuide) {
+      showInfo(context, 'Slide the card set for more options');
     }
   }
 
