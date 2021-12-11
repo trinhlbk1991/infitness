@@ -6,6 +6,7 @@ import 'package:infitness/base/base_bloc_listener.dart';
 import 'package:infitness/base/base_state.dart';
 import 'package:infitness/features/addworkout/add_workout_cubit.dart';
 import 'package:infitness/features/addworkout/widgets/add_exercise_dialog.dart';
+import 'package:infitness/features/addworkout/widgets/add_rest_dialog.dart';
 import 'package:infitness/features/addworkout/widgets/set_card.dart';
 import 'package:infitness/model/set.dart';
 import 'package:infitness/model/workout.dart';
@@ -149,6 +150,16 @@ class _AddWorkoutScreenState extends BaseState<AddWorkoutScreen> {
                 index,
                 exercise.copyWith(index: set.exercises.length),
               );
+            });
+          },
+          onAddRest: (set) {
+            showAddRestDialog(context, onSave: (rest) {
+              if (rest.time > 0) {
+                _cubit.addExercise(
+                  index,
+                  rest.copyWith(index: set.exercises.length),
+                );
+              }
             });
           },
           onDeleteExercise: (exerciseIndex) {

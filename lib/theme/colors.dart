@@ -26,6 +26,17 @@ class AppColors {
   static const TEXT_SECONDARY_DARK = Colors.white70;
 }
 
+Color primaryColor(BuildContext context) =>
+    Theme.of(context).colorScheme.secondary;
+
+Color secondaryColor(BuildContext context) =>
+    Theme.of(context).colorScheme.secondary;
+
+Color secondaryColorVariant(BuildContext context) =>
+    Theme.of(context).colorScheme.secondaryVariant;
+
+Color secondaryColorLight(BuildContext context) => AppColors.SECONDARY_LIGHT;
+
 Color textColorPrimary(BuildContext context) {
   if (isDarkMode(context)) {
     return AppColors.TEXT_PRIMARY_DARK;
@@ -41,11 +52,3 @@ Color textColorSecondary(BuildContext context) {
     return AppColors.TEXT_SECONDARY;
   }
 }
-
-Color secondaryColor(BuildContext context) =>
-    Theme.of(context).colorScheme.secondary;
-
-Color secondaryColorVariant(BuildContext context) =>
-    Theme.of(context).colorScheme.secondaryVariant;
-
-Color secondaryColorLight(BuildContext context) => AppColors.SECONDARY_LIGHT;

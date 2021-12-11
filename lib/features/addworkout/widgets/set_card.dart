@@ -1,4 +1,3 @@
-import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:infitness/model/exercise.dart';
 import 'package:infitness/model/set.dart';
@@ -7,6 +6,7 @@ import 'package:infitness/theme/dimensions.dart';
 import 'package:infitness/utils/date_time_utils.dart';
 import 'package:infitness/widgets/app_card.dart';
 import 'package:infitness/widgets/app_text.dart';
+import 'package:infitness/widgets/buttons/dotted_button.dart';
 import 'package:infitness/widgets/column_builder.dart';
 import 'package:infitness/widgets/number_picker.dart';
 import 'package:infitness/widgets/space.dart';
@@ -20,6 +20,7 @@ class SetCard extends StatelessWidget {
   final EdgeInsets? margin;
   final ValueChanged<int> onRepeatChanged;
   final ValueChanged<Set> onAddExercise;
+  final ValueChanged<Set> onAddRest;
   final ValueChanged<int> onDeleteExercise;
   final ValueChanged<Tuple2<int, Exercise>> onEditExercise;
 
@@ -31,6 +32,7 @@ class SetCard extends StatelessWidget {
     required this.onAddExercise,
     required this.onDeleteExercise,
     required this.onEditExercise,
+    required this.onAddRest,
     this.margin,
   }) : super(key: key);
 
@@ -54,7 +56,13 @@ class SetCard extends StatelessWidget {
             Space(),
             _exercises(set.exercises),
             Space(),
-            _btnAddExercise(context),
+            Row(
+              children: [
+                _btnAddRest(context),
+                Space(),
+                _btnAddExercise(context),
+              ],
+            ),
           ],
         ),
       ),
@@ -64,10 +72,7 @@ class SetCard extends StatelessWidget {
   Row _setRepeat(BuildContext context) {
     return Row(
       children: [
-        AppText(
-          'Repeat',
-          color: textColorPrimary(context),
-        ),
+        AppText('Repeat', color: textColorPrimary(context)),
         Space(size: Spacing.SMALL),
         SizedBox(
           height: 32,
@@ -85,27 +90,21 @@ class SetCard extends StatelessWidget {
     );
   }
 
-  Container _btnAddExercise(BuildContext context) => Container(
-        width: double.infinity,
-        child: Material(
-          child: InkWell(
-            onTap: () => onAddExercise(set),
-            borderRadius: BorderRadius.circular(AppRadius.DEFAULT),
-            child: DottedBorder(
-              strokeWidth: 1,
-              dashPattern: [5, 3],
-              color: textColorSecondary(context),
-              radius: Radius.circular(AppRadius.DEFAULT),
-              padding: EdgeInsets.all(Spacing.NORMAL),
-              borderType: BorderType.RRect,
-              child: Center(
-                child: AppText(
-                  'ADD EXERCISE',
-                  color: textColorSecondary(context),
-                ),
-              ),
-            ),
-          ),
+  Widget _btnAddExercise(BuildContext context) => Expanded(
+        child: DottedButton(
+          icon: Icons.add_rounded,
+          text: 'Exercise',
+          onTap: () => onAddExercise(set),
+          color: secondaryColor(context),
+        ),
+      );
+
+  Widget _btnAddRest(BuildContext context) => Expanded(
+        child: DottedButton(
+          icon: Icons.add_rounded,
+          text: 'Rest',
+          onTap: () => onAddRest(set),
+          color: textColorSecondary(context),
         ),
       );
 
