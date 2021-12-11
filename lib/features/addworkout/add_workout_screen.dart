@@ -1,4 +1,3 @@
-import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:infitness/base/base_bloc_builder.dart';
@@ -7,13 +6,13 @@ import 'package:infitness/base/base_state.dart';
 import 'package:infitness/features/addworkout/add_workout_cubit.dart';
 import 'package:infitness/features/addworkout/widgets/add_exercise_dialog.dart';
 import 'package:infitness/features/addworkout/widgets/add_rest_dialog.dart';
+import 'package:infitness/features/addworkout/widgets/confirm_delete_set_dialog.dart';
 import 'package:infitness/features/addworkout/widgets/set_card.dart';
 import 'package:infitness/model/set.dart';
 import 'package:infitness/model/workout.dart';
 import 'package:infitness/theme/colors.dart';
 import 'package:infitness/theme/dimensions.dart';
 import 'package:infitness/widgets/app_bar.dart';
-import 'package:infitness/widgets/app_text.dart';
 import 'package:infitness/widgets/buttons/app_buttons.dart';
 import 'package:infitness/widgets/buttons/dotted_button.dart';
 import 'package:infitness/widgets/column_builder.dart';
@@ -159,6 +158,14 @@ class _AddWorkoutScreenState extends BaseState<AddWorkoutScreen> {
               exercise: pair.item2,
               onSave: (value) =>
                   _cubit.updateExercise(index, pair.item1, value),
+            );
+          },
+          onDeleteSet: (set) {
+            showConfirmDeleteSetDialog(
+              context,
+              () {
+                _cubit.deleteSet(set);
+              },
             );
           },
         );

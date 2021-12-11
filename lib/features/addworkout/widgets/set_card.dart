@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:infitness/model/exercise.dart';
 import 'package:infitness/model/set.dart';
 import 'package:infitness/theme/colors.dart';
 import 'package:infitness/theme/dimensions.dart';
 import 'package:infitness/utils/date_time_utils.dart';
 import 'package:infitness/widgets/app_card.dart';
+import 'package:infitness/widgets/app_slidable_action.dart';
 import 'package:infitness/widgets/app_text.dart';
 import 'package:infitness/widgets/buttons/dotted_button.dart';
 import 'package:infitness/widgets/column_builder.dart';
@@ -23,6 +25,7 @@ class SetCard extends StatelessWidget {
   final ValueChanged<Set> onAddRest;
   final ValueChanged<int> onDeleteExercise;
   final ValueChanged<Tuple2<int, Exercise>> onEditExercise;
+  final ValueChanged<Set> onDeleteSet;
 
   const SetCard({
     Key? key,
@@ -33,6 +36,7 @@ class SetCard extends StatelessWidget {
     required this.onDeleteExercise,
     required this.onEditExercise,
     required this.onAddRest,
+    required this.onDeleteSet,
     this.margin,
   }) : super(key: key);
 
@@ -41,28 +45,41 @@ class SetCard extends StatelessWidget {
     return Container(
       width: double.infinity,
       margin: margin,
-      child: card(
-        padding: EdgeInsets.all(Spacing.NORMAL),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+      child: Slidable(
+        child: card(
+          padding: EdgeInsets.all(Spacing.NORMAL),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  headline6Text(context, 'Set ${index + 1}'),
+                  _setRepeat(context)
+                ],
+              ),
+              Space(),
+              _exercises(set.exercises),
+              Space(),
+              Row(
+                children: [
+                  _btnAddRest(context),
+                  Space(),
+                  _btnAddExercise(context),
+                ],
+              ),
+            ],
+          ),
+        ),
+        endActionPane: ActionPane(
+          motion: ScrollMotion(),
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                headline6Text(context, 'Set ${index + 1}'),
-                _setRepeat(context)
-              ],
-            ),
-            Space(),
-            _exercises(set.exercises),
-            Space(),
-            Row(
-              children: [
-                _btnAddRest(context),
-                Space(),
-                _btnAddExercise(context),
-              ],
-            ),
+            AppSlidableAction(
+              onPressed: (context) => onDeleteSet(set),
+              backgroundColor: Colors.red[800]!,
+              foregroundColor: Colors.white,
+              child: Icon(Icons.delete_outline_rounded, size: 48),
+            )
           ],
         ),
       ),

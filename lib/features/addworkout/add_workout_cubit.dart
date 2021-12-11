@@ -41,6 +41,12 @@ class AddWorkoutCubit extends Cubit<AddWorkoutState> {
     emit(AddWorkoutState.fromState(state: state, sets: newSets));
   }
 
+  deleteSet(Set set) {
+    final newSets = state.sets.toList();
+    newSets.remove(set);
+    emit(AddWorkoutState.fromState(state: state, sets: newSets));
+  }
+
   void addExercise(int setIndex, Exercise exercise) {
     final newExercises = state.sets[setIndex].exercises.toList();
     newExercises.add(exercise);
