@@ -15,6 +15,7 @@ import 'package:infitness/theme/dimensions.dart';
 import 'package:infitness/widgets/app_bar.dart';
 import 'package:infitness/widgets/app_text.dart';
 import 'package:infitness/widgets/buttons/app_buttons.dart';
+import 'package:infitness/widgets/buttons/dotted_button.dart';
 import 'package:infitness/widgets/column_builder.dart';
 import 'package:infitness/widgets/edit_text.dart';
 import 'package:infitness/widgets/space.dart';
@@ -107,29 +108,14 @@ class _AddWorkoutScreenState extends BaseState<AddWorkoutScreen> {
     );
   }
 
-  Widget _btnAddSet() => Container(
-        width: double.infinity,
-        child: InkWell(
-          borderRadius: BorderRadius.circular(AppRadius.DEFAULT),
-          onTap: () {
-            FocusScope.of(context).unfocus();
-            _cubit.addNewSet();
-          },
-          child: DottedBorder(
-            strokeWidth: 1.5,
-            dashPattern: [5, 3],
-            color: secondaryColor(context),
-            radius: Radius.circular(AppRadius.DEFAULT),
-            padding: EdgeInsets.all(Spacing.NORMAL),
-            borderType: BorderType.RRect,
-            child: Center(
-              child: AppText(
-                'ADD SET',
-                color: secondaryColor(context),
-              ),
-            ),
-          ),
-        ),
+  Widget _btnAddSet() => DottedButton(
+        icon: Icons.add_rounded,
+        text: 'Set',
+        color: secondaryColor(context),
+        onTap: () {
+          FocusScope.of(context).unfocus();
+          _cubit.addNewSet();
+        },
       );
 
   _workoutSets(List<Set> sets) {

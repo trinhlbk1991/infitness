@@ -22,7 +22,7 @@ void showAddRestDialog(
   final minutes = time ~/ 60;
   final seconds = time % 60;
   minuteTextController.text = time != 0 ? '$minutes' : '';
-  secondTextController.text = time != 0 ? '$seconds' : '';
+  secondTextController.text = time != 0 ? '$seconds' : '30';
 
   showModalBottomSheet(
     context: context,
