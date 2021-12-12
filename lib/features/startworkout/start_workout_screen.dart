@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:assets_audio_player/assets_audio_player.dart';
+import 'package:audio_session/audio_session.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -47,12 +48,14 @@ class _StartWorkoutScreenState extends BaseState<StartWorkoutScreen>
 
   StreamSubscription? _subscription;
 
+  late AudioSession _audioSession;
+
   @override
   void initState() {
     super.initState();
     _timerController = TimerController(this);
     _initTts();
-    _assetsAudioPlayer.open(Audio("assets/countdown.wav"), autoStart: false);
+    _setupAudioSession();
 
     setState(() {
       Wakelock.enable();
@@ -278,6 +281,30 @@ class _StartWorkoutScreenState extends BaseState<StartWorkoutScreen>
     _flutterTts.setErrorHandler((msg) {
       Log.e('StartWorkoutScreen', 'TTS exercise name failed: $msg');
     });
+
+    _assetsAudioPlayer.open(Audio("assets/countdown.wav"), autoStart: false);
+  }
+
+  void _setupAudioSession() {
+    AudioSession.instance.then((value) {
+      _audioSession = value;
+      _audioSession.configure(AudioSessionConfiguration(
+        avAudioSessionCategory: AVAudioSessionCategory.playback,
+        avAudioSessionCategoryOptions:
+            AVAudioSessionCategoryOptions.interruptSpokenAudioAndMixWithOthers,
+        avAudioSessionMode: AVAudioSessionMode.spokenAudio,
+        avAudioSessionRouteSharingPolicy:
+            AVAudioSessionRouteSharingPolicy.defaultPolicy,
+        avAudioSessionSetActiveOptions: AVAudioSessionSetActiveOptions.none,
+        androidAudioAttributes: const AndroidAudioAttributes(
+          contentType: AndroidAudioContentType.speech,
+          flags: AndroidAudioFlags.none,
+          usage: AndroidAudioUsage.voiceCommunication,
+        ),
+        androidAudioFocusGainType: AndroidAudioFocusGainType.gain,
+        androidWillPauseWhenDucked: true,
+      ));
+    });
   }
 
   Future _getDefaultEngine() async {
@@ -305,7 +332,13 @@ class _StartWorkoutScreenState extends BaseState<StartWorkoutScreen>
     }
     text += exercise.name;
 
-    await _flutterTts.awaitSpeakCompletion(true);
-    await _flutterTts.speak(text);
+    if (await _audioSession.setActive(true)) {
+      await _flutterTts.awaitSpeakCompletion(true);
+      await _flutterTts.speak(text);
+    } else {
+      Log.e(TAG, 'The request was denied and the app should not play audio');
+    }
   }
+
+  static const TAG = 'StartWorkoutScreen';
 }
