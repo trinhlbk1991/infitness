@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:infitness/theme/colors.dart';
 import 'package:infitness/theme/dimensions.dart';
+import 'package:infitness/widgets/space.dart';
 
 import '../app_text.dart';
 
@@ -39,6 +40,7 @@ class DottedButton extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 icon != null ? Icon(icon, color: color) : Container(),
+                icon != null ? Space(size: Spacing.TINY) : Container(),
                 AppText(text.toUpperCase(), color: color),
               ],
             ),

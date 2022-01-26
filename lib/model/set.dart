@@ -15,7 +15,7 @@ class Set {
   final int index;
 
   Set({
-    this.exercises = const [],
+    required this.exercises,
     this.repeat = 1,
     this.index = 0,
   });
@@ -35,4 +35,6 @@ class Set {
   String toString() {
     return 'Set{index: $index, exercises: $exercises, repeat: $repeat}';
   }
+
+  bool isRestSet() => exercises.length == 1 && exercises[0].isRest();
 }

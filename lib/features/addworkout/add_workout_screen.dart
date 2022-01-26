@@ -7,11 +7,13 @@ import 'package:infitness/features/addworkout/add_workout_cubit.dart';
 import 'package:infitness/features/addworkout/widgets/add_exercise_dialog.dart';
 import 'package:infitness/features/addworkout/widgets/add_rest_dialog.dart';
 import 'package:infitness/features/addworkout/widgets/confirm_delete_set_dialog.dart';
+import 'package:infitness/features/addworkout/widgets/rest_set_card.dart';
 import 'package:infitness/features/addworkout/widgets/set_card.dart';
 import 'package:infitness/model/set.dart';
 import 'package:infitness/model/workout.dart';
 import 'package:infitness/theme/colors.dart';
 import 'package:infitness/theme/dimensions.dart';
+import 'package:infitness/utils/log.dart';
 import 'package:infitness/widgets/app_bar.dart';
 import 'package:infitness/widgets/buttons/app_buttons.dart';
 import 'package:infitness/widgets/buttons/dotted_button.dart';
@@ -21,6 +23,7 @@ import 'package:infitness/widgets/space.dart';
 import 'package:infitness/widgets/top_rounded_corner_card.dart';
 
 import 'add_workout_state.dart';
+import 'widgets/add_workout_buttons.dart';
 
 class AddWorkoutScreen extends StatefulWidget {
   final Workout? workout;
@@ -102,27 +105,57 @@ class _AddWorkoutScreenState extends BaseState<AddWorkoutScreen> {
             Space(),
             _workoutSets(state.sets),
             Space(),
-            _btnAddSet(),
+            Row(
+              children: [
+                btnAddRest(context, onTap: () {
+                  showAddRestDialog(context, onSave: (rest) {
+                    if (rest.time > 0) {
+                      _cubit.addRestSet(rest.time);
+                    }
+                  });
+                }),
+                Space(),
+                btnAddSet(context, onTap: () {
+                  FocusScope.of(context).unfocus();
+                  _cubit.addNewSet();
+                }),
+              ],
+            ),
           ],
         ),
       ),
     );
   }
 
-  Widget _btnAddSet() => DottedButton(
-        icon: Icons.add_rounded,
-        text: 'Set',
-        color: secondaryColor(context),
-        onTap: () {
-          FocusScope.of(context).unfocus();
-          _cubit.addNewSet();
-        },
-      );
-
   _workoutSets(List<Set> sets) {
     return ColumnBuilder(
       itemBuilder: (context, index) {
         final set = sets[index];
+        Log.e('KAIIII', '$set');
+        Log.e('KAIIII', '${set.isRestSet()}');
+        if (set.isRestSet()) {
+          return RestSetCard(
+            index: index,
+            set: set,
+            onDeleteSet: (set) {
+              showConfirmDeleteSetDialog(context, () => _cubit.deleteSet(set));
+            },
+            onEditSet: (set) {
+              final index = sets.indexOf(set);
+              showAddRestDialog(
+                context,
+                time: set.exercises.first.time,
+                onSave: (rest) {
+                  if (rest.time > 0) {
+                    final newSet = Set(index: index, exercises: [rest]);
+                    _cubit.updateSet(index, newSet);
+                  }
+                },
+              );
+            },
+          );
+        }
+
         return SetCard(
           index: index,
           set: set,
@@ -163,12 +196,7 @@ class _AddWorkoutScreenState extends BaseState<AddWorkoutScreen> {
             );
           },
           onDeleteSet: (set) {
-            showConfirmDeleteSetDialog(
-              context,
-              () {
-                _cubit.deleteSet(set);
-              },
-            );
+            showConfirmDeleteSetDialog(context, () => _cubit.deleteSet(set));
           },
         );
       },

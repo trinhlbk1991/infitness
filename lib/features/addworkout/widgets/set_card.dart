@@ -8,13 +8,14 @@ import 'package:infitness/utils/date_time_utils.dart';
 import 'package:infitness/widgets/app_card.dart';
 import 'package:infitness/widgets/app_slidable_action.dart';
 import 'package:infitness/widgets/app_text.dart';
-import 'package:infitness/widgets/buttons/dotted_button.dart';
 import 'package:infitness/widgets/column_builder.dart';
 import 'package:infitness/widgets/number_picker.dart';
 import 'package:infitness/widgets/space.dart';
 import 'package:tuple/tuple.dart';
 
 import 'add_exercise_dialog.dart';
+import 'add_workout_buttons.dart';
+import 'set_card_scroll_actions.dart';
 
 class SetCard extends StatelessWidget {
   final int index;
@@ -63,28 +64,19 @@ class SetCard extends StatelessWidget {
               Space(),
               Row(
                 children: [
-                  _btnAddRest(context),
+                  btnAddRest(context, onTap: () => onAddRest(set)),
                   Space(),
-                  _btnAddExercise(context),
+                  btnAddExercise(context, onTap: () => onAddExercise(set)),
                 ],
               ),
             ],
           ),
         ),
-        endActionPane: ActionPane(
-          motion: ScrollMotion(),
-          children: [
-            AppSlidableAction(
-              onPressed: (context) => onDeleteSet(set),
-              backgroundColor: Colors.red[800]!,
-              child: Icon(
-                Icons.delete_outline_rounded,
-                size: 48,
-                color: Colors.white,
-              ),
-            )
-          ],
-        ),
+        endActionPane: setCardActions(
+        context,
+        onDelete: () => onDeleteSet(set),
+        onEdit: () {},
+      ),
       ),
     );
   }
@@ -109,24 +101,6 @@ class SetCard extends StatelessWidget {
       ],
     );
   }
-
-  Widget _btnAddExercise(BuildContext context) => Expanded(
-        child: DottedButton(
-          icon: Icons.add_rounded,
-          text: 'Exercise',
-          onTap: () => onAddExercise(set),
-          color: secondaryColor(context),
-        ),
-      );
-
-  Widget _btnAddRest(BuildContext context) => Expanded(
-        child: DottedButton(
-          icon: Icons.add_rounded,
-          text: 'Rest',
-          onTap: () => onAddRest(set),
-          color: textColorSecondary(context),
-        ),
-      );
 
   _exercises(List<Exercise> exercises) => ColumnBuilder(
         itemBuilder: (context, index) {

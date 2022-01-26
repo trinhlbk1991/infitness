@@ -27,7 +27,7 @@ class AddWorkoutCubit extends Cubit<AddWorkoutState> {
       AddWorkoutState(
         isAddMode: workout == null,
         workoutId: workout?.id ?? Uuid().v1(),
-        sets: workout?.sets ?? [Set()],
+        sets: workout?.sets ?? [Set(exercises: [])],
       ),
     );
   }
@@ -43,7 +43,7 @@ class AddWorkoutCubit extends Cubit<AddWorkoutState> {
 
   addNewSet() {
     final newSets = state.sets.toList();
-    newSets.add(Set(index: newSets.length));
+    newSets.add(Set(index: newSets.length, exercises: []));
 
     emit(AddWorkoutState.fromState(state: state, sets: newSets));
 
@@ -51,6 +51,22 @@ class AddWorkoutCubit extends Cubit<AddWorkoutState> {
       emit(AddWorkout_ShowGuide(state));
       _guideHive.setGuideDeleteSet(false);
     }
+  }
+
+  addRestSet(int rest) {
+    final newSets = state.sets.toList();
+    final set = Set(index: newSets.length, exercises: []);
+    set.exercises.add(Rest(rest));
+    newSets.add(set);
+
+    emit(AddWorkoutState.fromState(state: state, sets: newSets));
+  }
+
+  updateSet(int index, Set set) {
+    final newSets = state.sets.toList();
+    newSets[index] = set;
+
+    emit(AddWorkoutState.fromState(state: state, sets: newSets));
   }
 
   deleteSet(Set set) {
@@ -107,13 +123,5 @@ class AddWorkoutCubit extends Cubit<AddWorkoutState> {
     _workoutHive.save(workout);
 
     emit(AddWorkout_SaveSuccess(state));
-  }
-
-  updateRestSet(int value) {
-    emit(AddWorkoutState.fromState(state: state, restSet: value));
-  }
-
-  updateRestExercise(int value) {
-    emit(AddWorkoutState.fromState(state: state, restExercise: value));
   }
 }

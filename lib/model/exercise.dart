@@ -46,6 +46,8 @@ class Exercise {
   String toString() {
     return 'Exercise{name: $name, time: $time, rep: $rep, repTime: $repTime, index: $index}';
   }
+
+  bool isRest() => this is Rest || this.name == 'Rest';
 }
 
 class Rest extends Exercise {
