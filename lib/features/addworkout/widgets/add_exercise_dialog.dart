@@ -84,6 +84,7 @@ void showAddExerciseDialog(
                               : _repPicker(
                                   context,
                                   repsTextController: repTextController,
+                                  repTimeTextController: repTimeTextController,
                                 ),
                           Space(size: Spacing.LARGE),
                           Row(
@@ -207,6 +208,7 @@ Widget _timerPicker(
 Widget _repPicker(
   BuildContext context, {
   required TextEditingController repsTextController,
+  required TextEditingController repTimeTextController,
 }) =>
     Row(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -237,7 +239,7 @@ Widget _repPicker(
               width: 80,
               child: EditText(
                 hint: '0',
-                controller: repsTextController,
+                controller: repTimeTextController,
                 textAlign: TextAlign.center,
                 keyboardType: TextInputType.number,
               ),
