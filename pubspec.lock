@@ -7,14 +7,14 @@ packages:
       name: _fe_analyzer_shared
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "32.0.0"
+    version: "34.0.0"
   analyzer:
     dependency: transitive
     description:
       name: analyzer
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.0.0"
+    version: "3.2.0"
   animated_bottom_navigation_bar:
     dependency: "direct main"
     description:
@@ -126,7 +126,7 @@ packages:
       name: built_value
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "8.1.3"
+    version: "8.1.4"
   characters:
     dependency: transitive
     description:
@@ -273,14 +273,14 @@ packages:
       name: fimber
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.6.4"
+    version: "0.6.5"
   fimber_io:
     dependency: "direct main"
     description:
       name: fimber_io
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.6.4"
+    version: "0.6.5"
   fixnum:
     dependency: transitive
     description:
@@ -442,7 +442,7 @@ packages:
       name: lint
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.8.1"
+    version: "1.8.2"
   logging:
     dependency: transitive
     description:
@@ -804,7 +804,7 @@ packages:
       name: win32
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.3.3"
+    version: "2.3.8"
   xdg_directories:
     dependency: transitive
     description:
@@ -820,5 +820,5 @@ packages:
     source: hosted
     version: "3.1.0"
 sdks:
-  dart: ">=2.15.0-7.0.dev <3.0.0"
+  dart: ">=2.15.0 <3.0.0"
   flutter: ">=2.5.0"

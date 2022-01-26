@@ -12,8 +12,8 @@ dependencies:
   flutter:
     sdk: flutter
 
-  bloc: ^8.0.1
-  flutter_bloc: ^8.0.0
+  bloc: ^8.0.2
+  flutter_bloc: ^8.0.1
   provider: ^6.0.0
 
   hive: ^2.0.4
@@ -23,7 +23,7 @@ dependencies:
   animated_bottom_navigation_bar: ^0.3.2
   expandable: ^5.0.1
   dotted_border: ^2.0.0
-  group_button: ^3.3.1
+  group_button: ^4.2.1
   simple_timer: ^2.0.0
   flutter_slidable:
   fluttertoast: ^8.0.8
