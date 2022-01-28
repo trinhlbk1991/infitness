@@ -1,3 +1,5 @@
+// ignore_for_file: camel_case_types
+
 import 'package:equatable/equatable.dart';
 import 'package:infitness/features/startworkout/widgets/exercise_timer.dart';
 import 'package:infitness/model/exercise.dart';
@@ -30,8 +32,6 @@ class StartWorkoutState extends Equatable {
           exercises.add(set.exercises[i]);
         }
 
-        final isLastSetOfWorkout = repeat == set.repeat - 1 &&
-            workout.sets.indexOf(set) == set.exercises.length - 1;
       }
     });
   }

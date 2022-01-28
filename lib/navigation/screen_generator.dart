@@ -11,7 +11,9 @@ import 'package:infitness/navigation/route_settings_extensions.dart';
 
 homeScreen(BuildContext context, RouteSettings settings) {
   return BlocProvider(
-    create: (context) => HomeCubit(),
+    create: (context) => HomeCubit(
+      workoutHive: RepositoryProvider.of(context),
+    ),
     child: HomeScreen(),
   );
 }

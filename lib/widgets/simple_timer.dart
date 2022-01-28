@@ -2,7 +2,6 @@ library simple_timer;
 
 import 'dart:math' as Math;
 import 'package:flutter/material.dart';
-import 'package:infitness/utils/log.dart';
 
 /// A Simple Timer Widget
 ///

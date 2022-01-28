@@ -30,6 +30,7 @@ class _HomeScreenState extends BaseState<HomeScreen> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     _cubit = BlocProvider.of(context);
+    _cubit.initTemplateExercises();
   }
 
   @override

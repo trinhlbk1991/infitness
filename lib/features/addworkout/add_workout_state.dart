@@ -1,7 +1,7 @@
+// ignore_for_file: camel_case_types
+
 import 'package:equatable/equatable.dart';
 import 'package:infitness/model/set.dart';
-import 'package:infitness/model/workout.dart';
-import 'package:uuid/uuid.dart';
 
 class AddWorkoutState extends Equatable {
   final bool isAddMode;

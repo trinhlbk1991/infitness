@@ -1,4 +1,3 @@
-import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:infitness/model/exercise.dart';
 import 'package:infitness/model/history.dart';
@@ -12,6 +11,7 @@ class HiveUtils {
   static const String BOX_GUIDE = 'guide';
   static const String BOX_WORKOUT = 'workout';
   static const String BOX_HISTORY = 'history';
+  static const String BOX_TEMPLATE_EXERCISE = 'template_exercise';
 
   static init() async {
     await Hive.initFlutter();
@@ -25,6 +25,7 @@ class HiveUtils {
     await Hive.openBox(BOX_GUIDE);
     await Hive.openBox<Workout>(BOX_WORKOUT);
     await Hive.openBox<History>(BOX_HISTORY);
+    await Hive.openBox<Set>(BOX_TEMPLATE_EXERCISE);
   }
 
   static Box boxSettings() => Hive.box(BOX_SETTINGS);
@@ -34,4 +35,6 @@ class HiveUtils {
   static Box<Workout> boxWorkout() => Hive.box<Workout>(BOX_WORKOUT);
 
   static Box<History> boxHistory() => Hive.box<History>(BOX_HISTORY);
+
+  static Box<Set> boxTemplateExercise() => Hive.box<Set>(BOX_TEMPLATE_EXERCISE);
 }

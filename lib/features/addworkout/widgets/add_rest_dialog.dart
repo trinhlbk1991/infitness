@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:infitness/model/exercise.dart';
-import 'package:infitness/theme/app_theme.dart';
-import 'package:infitness/theme/colors.dart';
 import 'package:infitness/theme/dimensions.dart';
 import 'package:infitness/widgets/app_text.dart';
 import 'package:infitness/widgets/buttons/app_buttons.dart';
 import 'package:infitness/widgets/edit_text.dart';
-import 'package:infitness/widgets/number_picker.dart';
 import 'package:infitness/widgets/space.dart';
 import 'package:infitness/widgets/top_rounded_corner_card.dart';
 

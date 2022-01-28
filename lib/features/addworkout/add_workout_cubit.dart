@@ -27,7 +27,7 @@ class AddWorkoutCubit extends Cubit<AddWorkoutState> {
       AddWorkoutState(
         isAddMode: workout == null,
         workoutId: workout?.id ?? Uuid().v1(),
-        sets: workout?.sets ?? [Set(exercises: [])],
+        sets: workout?.sets ?? [],
       ),
     );
   }

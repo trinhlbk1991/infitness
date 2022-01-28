@@ -1,3 +1,5 @@
+// ignore_for_file: unused_import
+
 import 'package:equatable/equatable.dart';
 import 'package:infitness/model/history.dart';
 import 'package:infitness/model/workout.dart';
