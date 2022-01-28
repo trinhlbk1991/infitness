@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:infitness/features/addworkout/widgets/edit_set_dialog.dart';
 import 'package:infitness/model/exercise.dart';
 import 'package:infitness/model/set.dart';
 import 'package:infitness/theme/colors.dart';
 import 'package:infitness/theme/dimensions.dart';
 import 'package:infitness/utils/date_time_utils.dart';
 import 'package:infitness/widgets/app_card.dart';
-import 'package:infitness/widgets/app_slidable_action.dart';
 import 'package:infitness/widgets/app_text.dart';
 import 'package:infitness/widgets/column_builder.dart';
 import 'package:infitness/widgets/number_picker.dart';
@@ -26,6 +26,7 @@ class SetCard extends StatelessWidget {
   final ValueChanged<Set> onAddRest;
   final ValueChanged<int> onDeleteExercise;
   final ValueChanged<Tuple2<int, Exercise>> onEditExercise;
+  final ValueChanged<Set> onEditSet;
   final ValueChanged<Set> onDeleteSet;
 
   const SetCard({
@@ -38,6 +39,7 @@ class SetCard extends StatelessWidget {
     required this.onEditExercise,
     required this.onAddRest,
     required this.onDeleteSet,
+    required this.onEditSet,
     this.margin,
   }) : super(key: key);
 
@@ -55,7 +57,10 @@ class SetCard extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  headline6Text(context, 'Set ${index + 1}'),
+                  headline6Text(
+                    context,
+                    set.name.isEmpty ? 'Set ${index + 1}' : set.name,
+                  ),
                   _setRepeat(context)
                 ],
               ),
@@ -73,10 +78,16 @@ class SetCard extends StatelessWidget {
           ),
         ),
         endActionPane: setCardActions(
-        context,
-        onDelete: () => onDeleteSet(set),
-        onEdit: () {},
-      ),
+          context,
+          onDelete: () => onDeleteSet(set),
+          onEdit: () {
+            showEditSetDialog(
+              context,
+              set: set,
+              onSave: (value) => onEditSet(value),
+            );
+          },
+        ),
       ),
     );
   }

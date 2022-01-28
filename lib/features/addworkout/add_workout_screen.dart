@@ -88,7 +88,7 @@ class _AddWorkoutScreenState extends BaseState<AddWorkoutScreen> {
     if (state is AddWorkout_SaveSuccess) {
       Navigator.of(context).pop();
     } else if (state is AddWorkout_ShowGuide) {
-      showInfo(context, 'Slide the card set for more options');
+      showInfo(context, 'Slide the card set for more options', duration: 5);
     }
   }
 
@@ -131,8 +131,7 @@ class _AddWorkoutScreenState extends BaseState<AddWorkoutScreen> {
     return ColumnBuilder(
       itemBuilder: (context, index) {
         final set = sets[index];
-        Log.e('KAIIII', '$set');
-        Log.e('KAIIII', '${set.isRestSet()}');
+
         if (set.isRestSet()) {
           return RestSetCard(
             index: index,
@@ -195,8 +194,12 @@ class _AddWorkoutScreenState extends BaseState<AddWorkoutScreen> {
                   _cubit.updateExercise(index, pair.item1, value),
             );
           },
-          onDeleteSet: (set) {
-            showConfirmDeleteSetDialog(context, () => _cubit.deleteSet(set));
+          onDeleteSet: (value) {
+            showConfirmDeleteSetDialog(context, () => _cubit.deleteSet(value));
+          },
+          onEditSet: (value) {
+            final index = sets.indexOf(set);
+            _cubit.updateSet(index, value);
           },
         );
       },

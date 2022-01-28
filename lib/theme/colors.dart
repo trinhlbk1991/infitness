@@ -26,7 +26,7 @@ class AppColors {
   static const TEXT_SECONDARY_DARK = Colors.white70;
 
 
-  static const Color CARD_REST = Color(0xff2d969c);
+  static const Color CARD_REST = Color(0xff4f9599);
 }
 
 Color primaryColor(BuildContext context) =>

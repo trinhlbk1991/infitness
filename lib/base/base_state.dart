@@ -111,13 +111,12 @@ abstract class BaseState<T extends StatefulWidget> extends State<T> {
     );
   }
 
-  showInfo(BuildContext context, String message) {
-    _showToast(
-      context,
-      message: message,
-      icon: Icons.lightbulb_rounded,
-      color: Colors.blue[700]!,
-    );
+  showInfo(BuildContext context, String message, {int duration = 2}) {
+    _showToast(context,
+        message: message,
+        icon: Icons.lightbulb_rounded,
+        color: Colors.blue[700]!,
+        duration: duration);
   }
 
   showProgress(
@@ -160,6 +159,7 @@ abstract class BaseState<T extends StatefulWidget> extends State<T> {
     required String message,
     required IconData icon,
     required Color color,
+    int duration = 2,
   }) {
     Widget toast = Container(
       padding: EdgeInsets.symmetric(
@@ -180,7 +180,7 @@ abstract class BaseState<T extends StatefulWidget> extends State<T> {
     fToast.showToast(
       child: toast,
       gravity: ToastGravity.BOTTOM,
-      toastDuration: Duration(seconds: 2),
+      toastDuration: Duration(seconds: duration),
     );
   }
 }
