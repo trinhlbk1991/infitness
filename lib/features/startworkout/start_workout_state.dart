@@ -20,6 +20,8 @@ class StartWorkoutState extends Equatable {
 
   Exercise getCurrentExercise() => exercises[exerciseIndex];
 
+  Exercise? getNextExercise() => canForward() ? exercises[exerciseIndex + 1] : null;
+
   StartWorkoutState({
     required this.workout,
     this.exerciseIndex = 0,

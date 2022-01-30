@@ -55,4 +55,17 @@ class Workout {
   String toString() {
     return 'Workout{id: $id, name: $name, sets: ${sets.length}';
   }
+
+  int estTime() {
+    var time = 0;
+    sets.forEach((set) {
+      final setTime = set.exercises.fold(
+        0,
+        (prev, element) =>
+            (prev as int) + element.time + element.rep * element.repTime,
+      );
+      time += setTime * set.repeat;
+    });
+    return time;
+  }
 }

@@ -202,13 +202,5 @@ class WorkoutCard extends StatelessWidget {
 }
 
 String _workoutEstTime(Workout workout) {
-  var time = 0;
-  workout.sets.forEach((set) {
-    final setTime = set.exercises.fold(
-        0,
-        (previousValue, element) =>
-            (previousValue as int) + element.time + element.rep * 5);
-    time += setTime * set.repeat;
-  });
-  return 'Duration: ${DateTimeUtils.formatSeconds(time)}';
+  return 'Duration: ${DateTimeUtils.formatSeconds(workout.estTime())}';
 }

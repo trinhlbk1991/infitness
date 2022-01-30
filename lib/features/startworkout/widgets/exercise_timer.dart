@@ -37,15 +37,13 @@ Widget exerciseTimer(
           child: Column(
             children: [
               Expanded(
-                child: exercise.time > 0
-                    ? _timer(
-                        context,
-                        exercise,
-                        timerController,
-                        onTimerFinished,
-                        onValueChanged,
-                      )
-                    : _indeterminateProgress(context, exercise),
+                child: _timer(
+                  context,
+                  exercise,
+                  timerController,
+                  onTimerFinished,
+                  onValueChanged,
+                ),
               ),
               Space(),
               AppText(
@@ -78,41 +76,6 @@ Widget exerciseTimer(
         ),
       ],
     ),
-  );
-}
-
-Widget _indeterminateProgress(BuildContext context, Exercise exercise) {
-  return Stack(
-    children: [
-      AspectRatio(
-        aspectRatio: 1,
-        child: Container(
-          padding: EdgeInsets.all(Spacing.NORMAL),
-          child: CircularProgressIndicator(
-            valueColor: AlwaysStoppedAnimation<Color>(secondaryColor(context)),
-            backgroundColor: secondaryColor(context).withOpacity(0.1),
-            strokeWidth: 20,
-          ),
-        ),
-      ),
-      Positioned.fill(
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              AppText(
-                '${exercise.rep}',
-                style: Theme.of(context)
-                    .textTheme
-                    .headline1
-                    ?.copyWith(color: secondaryColor(context), fontSize: 70),
-              ),
-              headline5Text(context, 'reps')
-            ],
-          ),
-        ),
-      )
-    ],
   );
 }
 
@@ -193,17 +156,34 @@ Widget _timer(
   Function(Exercise) onTimerFinished,
   Function(int, int) onValueChanged,
 ) {
+  final String Function(Duration timeElapsed)? _progressTimeTextFormatter =
+      (timeElapsed) {
+    final minutes = timeElapsed.inMinutes.toString().padLeft(2, '0');
+    final seconds = (timeElapsed.inSeconds % 60).toString().padLeft(2, '0');
+    return '$minutes:$seconds';
+  };
+
+  final String Function(Duration timeElapsed)? _progressRepTextFormatter =
+      (timeElapsed) {
+    final currentRep = exercise.rep - timeElapsed.inSeconds ~/ exercise.repTime;
+    return '$currentRep / ${exercise.rep}';
+  };
+
   return Container(
     margin: EdgeInsets.all(Spacing.NORMAL),
     child: SimpleTimer(
-      duration: Duration(seconds: exercise.time),
+      duration: Duration(
+        seconds:
+            exercise.time > 0 ? exercise.time : exercise.rep * exercise.repTime,
+      ),
       controller: timerController,
       progressTextStyle: Theme.of(context)
           .textTheme
           .headline1
           ?.copyWith(color: secondaryColor(context), fontSize: 70),
-      displayProgressText: exercise.time > 0,
-      progressTextFormatter: _progressTextFormatter,
+      progressTextFormatter: exercise.time > 0
+          ? _progressTimeTextFormatter
+          : _progressRepTextFormatter,
       progressIndicatorDirection: TimerProgressIndicatorDirection.clockwise,
       progressIndicatorColor: secondaryColor(context),
       backgroundColor: secondaryColor(context).withOpacity(0.1),
@@ -239,10 +219,3 @@ Widget _container(
       ),
       child: child,
     );
-
-final String Function(Duration timeElapsed)? _progressTextFormatter =
-    (timeElapsed) {
-  final minutes = timeElapsed.inMinutes.toString().padLeft(2, '0');
-  final seconds = (timeElapsed.inSeconds % 60).toString().padLeft(2, '0');
-  return '$minutes:$seconds';
-};
