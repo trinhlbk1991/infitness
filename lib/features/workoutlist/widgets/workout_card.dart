@@ -172,9 +172,11 @@ class WorkoutCard extends StatelessWidget {
                       color: textColorSecondary(context),
                     ),
                   ),
-                  AppText(
-                    exercise.name,
-                    fontWeight: FontWeight.w500,
+                  Expanded(
+                    child: AppText(
+                      exercise.name,
+                      fontWeight: FontWeight.w500,
+                    ),
                   )
                 ],
               );
