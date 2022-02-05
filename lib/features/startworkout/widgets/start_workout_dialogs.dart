@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:infitness/widgets/alert_bottom_sheet.dart';
-import 'package:infitness/widgets/simple_timer.dart';
+import 'package:simple_timer/simple_timer.dart';
 
 showConfirmExitDialog(BuildContext context,
     TimerController _timerController,

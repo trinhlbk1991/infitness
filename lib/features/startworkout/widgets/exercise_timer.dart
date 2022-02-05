@@ -5,8 +5,8 @@ import 'package:infitness/theme/dimensions.dart';
 import 'package:infitness/utils/view_utils.dart';
 import 'package:infitness/widgets/app_text.dart';
 import 'package:infitness/widgets/buttons/icon_button.dart';
-import 'package:infitness/widgets/simple_timer.dart';
 import 'package:infitness/widgets/space.dart';
+import 'package:simple_timer/simple_timer.dart';
 
 enum TimerState { IDLE, PLAYING, PAUSED }
 

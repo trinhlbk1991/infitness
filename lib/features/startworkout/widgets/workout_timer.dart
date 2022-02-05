@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:infitness/model/exercise.dart';
 import 'package:infitness/theme/colors.dart';
-import 'package:infitness/theme/dimensions.dart';
 import 'package:infitness/utils/date_time_utils.dart';
 import 'package:infitness/widgets/app_text.dart';
-import 'package:infitness/widgets/simple_timer.dart';
+import 'package:simple_timer/simple_timer.dart';
 
 import 'exercise_timer.dart' as inf;
 

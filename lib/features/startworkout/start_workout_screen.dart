@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:infitness/base/base_bloc_builder.dart';
@@ -19,7 +18,7 @@ import 'package:infitness/utils/tts_utils.dart';
 import 'package:infitness/utils/view_utils.dart';
 import 'package:infitness/widgets/app_text.dart';
 import 'package:infitness/widgets/buttons/icon_button.dart';
-import 'package:infitness/widgets/simple_timer.dart';
+import 'package:simple_timer/simple_timer.dart';
 import 'package:wakelock/wakelock.dart';
 
 import 'widgets/start_workout_dialogs.dart';
