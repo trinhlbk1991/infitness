@@ -1,11 +1,11 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:infitness/database/history_hive.dart';
-import 'package:infitness/features/startworkout/widgets/exercise_timer.dart';
 import 'package:infitness/model/history.dart';
 import 'package:infitness/model/workout.dart';
 import 'package:infitness/utils/date_time_utils.dart';
 
 import 'start_workout_state.dart';
+import 'widgets/workout_timer.dart';
 
 class StartWorkoutCubit extends Cubit<StartWorkoutState> {
   HistoryHive _historyHive;

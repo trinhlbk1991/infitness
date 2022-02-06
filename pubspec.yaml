@@ -27,6 +27,7 @@ dependencies:
   simple_timer: ^2.0.0
   flutter_slidable:
   fluttertoast: ^8.0.8
+  step_progress_indicator: ^1.0.2
 
   equatable: ^2.0.3
   tuple: ^2.0.0

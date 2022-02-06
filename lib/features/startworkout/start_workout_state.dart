@@ -1,9 +1,10 @@
 // ignore_for_file: camel_case_types
 
 import 'package:equatable/equatable.dart';
-import 'package:infitness/features/startworkout/widgets/exercise_timer.dart';
 import 'package:infitness/model/exercise.dart';
 import 'package:infitness/model/workout.dart';
+
+import 'widgets/workout_timer.dart';
 
 class StartWorkoutState extends Equatable {
   final Workout workout;
@@ -20,7 +21,8 @@ class StartWorkoutState extends Equatable {
 
   Exercise getCurrentExercise() => exercises[exerciseIndex];
 
-  Exercise? getNextExercise() => canForward() ? exercises[exerciseIndex + 1] : null;
+  Exercise? getNextExercise() =>
+      canForward() ? exercises[exerciseIndex + 1] : null;
 
   StartWorkoutState({
     required this.workout,
@@ -33,7 +35,6 @@ class StartWorkoutState extends Equatable {
         for (int i = 0; i < set.exercises.length; i++) {
           exercises.add(set.exercises[i]);
         }
-
       }
     });
   }

@@ -6,7 +6,7 @@ import 'package:infitness/utils/date_time_utils.dart';
 import 'package:infitness/widgets/app_text.dart';
 import 'package:simple_timer/simple_timer.dart';
 
-import 'exercise_timer.dart' as inf;
+enum TimerState { IDLE, PLAYING, PAUSED }
 
 class WorkoutTimer extends StatefulWidget {
   final TimerController timerController;
@@ -52,7 +52,7 @@ class _WorkoutTimerState extends State<WorkoutTimer> {
     BuildContext context, {
     required TimerController timerController,
     required Exercise exercise,
-    inf.TimerState state = inf.TimerState.IDLE,
+    TimerState state = TimerState.IDLE,
     required Function(Exercise) onTimerFinished,
     required Function(int, int) onValueChanged,
   }) {
@@ -85,7 +85,8 @@ class _WorkoutTimerState extends State<WorkoutTimer> {
           ),
           controller: timerController,
           displayProgressText: false,
-          progressIndicatorColor: secondaryColor(context),
+          progressIndicatorColor:
+              exercise.isRest() ? AppColors.PROGRESS_REST : secondaryColor(context),
           backgroundColor: secondaryColor(context).withOpacity(0.1),
           strokeWidth: 20,
           onEnd: () => onTimerFinished(exercise),

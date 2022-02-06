@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:infitness/widgets/buttons/icon_button.dart';
-
-import 'exercise_timer.dart';
+import 'workout_timer.dart';
 
 Widget btnStart(
   BuildContext context, {

@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:infitness/features/addworkout/widgets/set_card_scroll_actions.dart';
 import 'package:infitness/model/set.dart';
+import 'package:infitness/theme/app_theme.dart';
 import 'package:infitness/theme/colors.dart';
 import 'package:infitness/theme/dimensions.dart';
 import 'package:infitness/utils/date_time_utils.dart';
 import 'package:infitness/widgets/app_card.dart';
 import 'package:infitness/widgets/app_text.dart';
-
 
 class RestSetCard extends StatelessWidget {
   final int index;
@@ -33,7 +33,9 @@ class RestSetCard extends StatelessWidget {
       child: Slidable(
         child: card(
           padding: EdgeInsets.all(Spacing.NORMAL),
-          color: AppColors.CARD_REST,
+          color: isDarkMode(context)
+              ? AppColors.PROGRESS_REST.withOpacity(0.6)
+              : AppColors.PROGRESS_REST,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

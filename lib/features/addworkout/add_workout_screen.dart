@@ -133,6 +133,7 @@ class _AddWorkoutScreenState extends BaseState<AddWorkoutScreen> {
           return RestSetCard(
             index: index,
             set: set,
+            margin: EdgeInsets.only(bottom: Spacing.NORMAL),
             onDeleteSet: (set) {
               showConfirmDeleteSetDialog(context, () => _cubit.deleteSet(set));
             },

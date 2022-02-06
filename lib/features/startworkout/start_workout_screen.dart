@@ -19,6 +19,7 @@ import 'package:infitness/utils/view_utils.dart';
 import 'package:infitness/widgets/app_text.dart';
 import 'package:infitness/widgets/buttons/icon_button.dart';
 import 'package:simple_timer/simple_timer.dart';
+import 'package:step_progress_indicator/step_progress_indicator.dart';
 import 'package:wakelock/wakelock.dart';
 
 import 'widgets/start_workout_dialogs.dart';
@@ -34,8 +35,6 @@ class StartWorkoutScreen extends StatefulWidget {
 
 class _StartWorkoutScreenState extends BaseState<StartWorkoutScreen>
     with SingleTickerProviderStateMixin {
-  static const TAG = 'StartWorkoutScreen';
-
   late StartWorkoutCubit _cubit;
 
   late TimerController _timerController;
@@ -155,7 +154,13 @@ class _StartWorkoutScreenState extends BaseState<StartWorkoutScreen>
                         ),
                       ),
                       _expanded(),
-                      _bottomActions(context, state)
+                      _bottomActions(context, state),
+                      StepProgressIndicator(
+                        totalSteps: state.exercises.length - 1,
+                        currentStep: state.exerciseIndex,
+                        unselectedColor: textColorSecondary(context),
+                        selectedColor: primaryColor(context),
+                      ),
                     ],
                   ),
                 )
